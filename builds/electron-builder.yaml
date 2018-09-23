@@ -1,0 +1,10 @@
+directories:
+  output: builds
+  buildResources: build
+appId: simonloir.snotes
+win:
+  target: nsis
+  icon: images/smath-logo.ico
+files:
+  - filter: '!firebase-bot/**/*'
+electronVersion: 1.8.8

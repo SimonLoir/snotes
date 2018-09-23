@@ -1,0 +1,10 @@
+@import './start_menu/index.scss';
+@import './main/index.scss';
+body,
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
+button {
+    cursor: pointer;
+}

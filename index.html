@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SNotes</title>
+</head>
+
+<body>
+
+    <div id="start_screen" class="">
+        <div class="wrapper-center">
+            <h1>SNotes (alpha)</h1>
+            <p>Prenez des notes, sauvegardez-les et exportez-les.</p>
+            <p><b id="ss-message">Chargement ...</b></p>
+        </div>
+    </div>
+    <main>
+        <div id="notes">
+            <div id="tools">
+                <span id="tool-paste">Code</span><span id="tool-paste">Math</span>
+            </div>
+
+        </div>
+        <div id="docs">
+            <button>Ouvrir un PDF ou un fichier .snote</button>
+        </div>
+    </main>
+    <div id="tmp" style="display: none;"></div>
+    <style>
+        @font-face {
+            font-family: 'Montserrat';
+            font-weight: 400;
+            src: url('montserrat/Montserrat/Montserrat-Regular.ttf');
+        }
+
+        @font-face {
+            font-family: 'MontserratBold';
+            font-weight: 400;
+            src: url('montserrat/Montserrat/Montserrat-Bold.ttf');
+        }
+    </style>
+    <script>
+        document.ondragover = document.ondrop = (ev) => {
+            ev.preventDefault()
+        }
+    </script>
+    <script src="./dist/snote.bundle.js"></script>
+    <script src="./src/js/pdf.js"></script>
+    <script src="./src/js/pdf.worker.js"></script>
+    <script>
+        let dialog = undefined;
+        if (window.process) {
+            dialog = require('electron').remote.dialog;
+            /*
+            var remote = require('electron').remote;
+            var webFrame = require('electron').webFrame;
+            var SpellCheckProvider = require('electron-spell-check-provider');
+            // `remote.require` since `Menu` is a main-process module.
+            //var buildEditorContextMenu = remote.require('electron-editor-context-menu');
+
+            var selection;
+            function resetSelection() {
+                selection = {
+                    isMisspelled: false,
+                    spellingSuggestions: []
+                };
+            }
+            resetSelection();
+
+            // Reset the selection when clicking around, before the spell-checker runs and the context menu shows.
+            window.addEventListener('mousedown', resetSelection);
+
+            // The spell-checker runs when the user clicks on text and before the 'contextmenu' event fires.
+            // Thus, we may retrieve spell-checking suggestions to put in the menu just before it shows.
+            webFrame.setSpellCheckProvider(
+                'fr-BE',
+                // Not sure what this parameter (`autoCorrectWord`) does: https://github.com/atom/electron/issues/4371
+                // The documentation for `webFrame.setSpellCheckProvider` passes `true` so we do too.
+                true,
+                new SpellCheckProvider('fr-BE').on('misspelling', function (suggestions) {
+                    // Prime the context menu with spelling suggestions _if_ the user has selected text. Electron
+                    // may sometimes re-run the spell-check provider for an outdated selection e.g. if the user
+                    // right-clicks some misspelled text and then an image.
+                    if (window.getSelection().toString()) {
+                        selection.isMisspelled = true;
+                        // Take the first three suggestions if any.
+                        selection.spellingSuggestions = suggestions.slice(0, 3);
+                    }
+                }));
+
+            window.addEventListener('contextmenu', function (e) {
+                console.log(selection)
+            });*/
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+$env: 'prod';
+$duration: 0.15s;
+@if $env=='dev' {
+    $duration: 0.15s;
+}
+
+@else {
+    $duration: 0.75s;
+}
+
+#start_screen {
+    z-index: 100;
+    background: linear-gradient(to bottom left, #f99758, #fc5284);
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    color: white;
+    font-weight: 400;
+    & h1 {
+        font-size: 66px;
+        font-weight: 700;
+        font-family: 'MontserratBold';
+    }
+    & .wrapper-center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+    transition: $duration;
+    &.hidden {
+        overflow: hidden;
+        opacity: 0;
+    }
+}
