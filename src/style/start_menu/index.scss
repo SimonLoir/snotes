@@ -1,10 +1,8 @@
-$env: 'prod';
+$env: 'dev';
 $duration: 0.15s;
-@if $env=='dev' {
+@if $env== 'dev' {
     $duration: 0.15s;
-}
-
-@else {
+} @else {
     $duration: 0.75s;
 }
 

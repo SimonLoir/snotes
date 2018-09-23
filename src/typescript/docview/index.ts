@@ -59,6 +59,32 @@ export default class docview {
         $('#docs img')
             .only(0)
             .addClass('visible');
+        let controls = $('#docs')
+            .child('div')
+            .addClass('controls');
+        let i = 0;
+        let previous = controls.child('button').html('&#8592;');
+        let page = controls.child('span');
+        let next = controls.child('button').html('&#8594;');
+        const update = () => {
+            page.text(`Page ${i + 1} / ${images.length}`);
+            if (!$('#docs img').exists(i)) return;
+            $('#docs img.visible').removeClass('visible');
+            $('#docs img')
+                .only(i)
+                .addClass('visible');
+        };
+        previous.click(() => {
+            i--;
+            if (i < 0) i = 0;
+            update();
+        });
+        next.click(() => {
+            i++;
+            if (i >= images.length) i = images.length - 1;
+            update();
+        });
+        update();
         toggleStartScreen();
     }
 

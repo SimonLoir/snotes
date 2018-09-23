@@ -30,18 +30,38 @@ main {
                 display: block;
             }
         }
-        & button {
+        & #open {
             font-size: 25px;
             background: none;
             border: none;
             color: #f99758;
         }
-        & button,
+        & #open,
         & img {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+        }
+        & .controls {
+            background: rgba(0, 0, 0, 0.85);
+            color: white;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            overflow: hidden;
+            border-radius: 4px;
+            & button {
+                padding: 15px;
+                &,
+                span {
+                    font-size: 20px;
+                }
+                background: transparent;
+                border: none;
+                color: white;
+            }
         }
     }
     & #notes {
