@@ -6,6 +6,29 @@ main {
     right: 0;
     bottom: 0;
     left: 0;
+    $top: 31px;
+    & #menu {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: $top - 1px;
+        border-bottom: 1px solid darkgray;
+        background: white;
+        right: 50vw;
+        & button {
+            padding: 15px;
+            padding-top: 0;
+            padding-bottom: 0;
+            height: 100%;
+            &,
+            span {
+                font-size: 15px;
+            }
+            background: transparent;
+            border: none;
+            color: gray;
+        }
+    }
     & #docs,
     & #notes {
         position: absolute;
@@ -14,6 +37,7 @@ main {
         overflow: auto;
     }
     & #docs {
+        top: $top;
         left: 0;
         padding: 0;
         margin: 0;
@@ -71,9 +95,11 @@ main {
         left: 50vw;
         background: #fcfcfc;
         & #tools {
+            background: white;
             border-bottom: 1px solid lightgray;
             white-space: nowrap;
             height: 30px;
+            border-left: 1px solid lightgray;
             & span {
                 height: calc(30px - 10px);
                 cursor: pointer;
