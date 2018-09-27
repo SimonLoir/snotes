@@ -3,6 +3,7 @@ import FS from '../filesystem';
 import pdf2Base64Array from '../pdf2png';
 import env from '../env';
 import toggleStartScreen from '../startscreen';
+import Notes from '../notes';
 export const tmp = '${os.dir}/.snote/.tmp';
 export default class docview {
     constructor() {
@@ -33,27 +34,28 @@ export default class docview {
             let getDoc;
             if (ext == 'pdf') getDoc = this.openPDF(file);
             if (ext == 'snote') getDoc = this.openSDoc(file);
-            getDoc.then(() => {
-                this.loadFromTmp();
+            getDoc.then((data: any) => {
+                this.loadFromTmp(data);
+                //@ts-ignore
+                if (ext == 'snote' && base_file.path != undefined)
+                    //@ts-ignore
+                    $('#doc_location').text(base_file.path);
             });
         });
     }
 
-    private async loadFromTmp() {
+    private async loadFromTmp(data: string[]) {
         let file = await FS.readFile(tmp);
+        file = file.trim();
         let images = file.split('\n');
         $('#ss-message').text(`Loaded ${images.length} images`);
         $('#docs').html('');
-        images.forEach(image => {
+        images.forEach((image, i) => {
             $('#docs')
                 .child('img')
                 .attr('src', image);
-            $('#notes')
-                .child('div')
-                .addClass('rich-textarea')
-                .attr('spellcheck', 'true')
-                .attr('contenteditable', 'true')
-                .css('display', 'none');
+
+            new Notes(data[i]);
         });
         $('#notes .rich-textarea')
             .only(0)
@@ -97,19 +99,21 @@ export default class docview {
     private async openSDoc(file: any) {
         toggleStartScreen();
         $('#ss-message').text('Ouverture du fichier');
-        return new Promise(async resolve => {
+        return new Promise(async (resolve: any) => {
             let reader = new FileReader();
-            reader.addEventListener('loadend', (e: any) => {
-                /**
-                 * [img]${images.only(i).attr('src')}[end_img]${notes
-                .only(i)
-                .text()}::end_content--snotes:content.end
-                 */
+            reader.addEventListener('loadend', async (e: any) => {
                 let content: string = e.srcElement.result;
                 let c = content.split('::end_content--snotes:content.end');
+                let imgs: string[] = [];
+                let texts: string[] = [];
                 c.forEach(part => {
-                    console.log(part.split('[end_img]')[1]);
+                    let spl = part.split('[end_img]');
+                    spl[0] = spl[0].replace('[img]', '');
+                    imgs.push(spl[0]);
+                    texts.push(spl[1]);
                 });
+                await this.saveImagesToTmp(imgs);
+                resolve(texts);
             });
             reader.readAsText(await fetch(file).then(r => r.blob()));
         });
@@ -121,8 +125,14 @@ export default class docview {
         return new Promise(async resolve => {
             let images = await pdf2Base64Array(file);
 
-            console.log(images);
+            resolve(await this.saveImagesToTmp(images));
 
+            console.log(images);
+        });
+    }
+
+    private async saveImagesToTmp(images: string[]) {
+        return new Promise(resolve => {
             FS.writeFile(tmp, images.join('\n')).then(() => {
                 console.log('saved to temp directory');
                 resolve();

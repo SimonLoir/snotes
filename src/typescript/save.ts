@@ -7,7 +7,13 @@ let dir: string = undefined;
 $('#menu-save').click(() => {
     save();
 });
+export function getSaveText(text: string) {
+    return text;
+}
 export default function save() {
+    if ($('#doc_location').text() == '') dir = undefined;
+    else dir = $('#doc_location').text();
+
     toggleStartScreen();
     $('#ss-message').text('Sauvegarde');
     setTimeout(async () => {
@@ -15,9 +21,11 @@ export default function save() {
         let notes = $('#notes .rich-textarea');
         let images = $('#docs img');
         notes.forEach(i => {
-            content += `[img]${images.only(i).attr('src')}[end_img]${notes
+            content += `[img]${images
                 .only(i)
-                .text()}::end_content--snotes:content.end`;
+                .attr('src')}[end_img]${getSaveText(
+                notes.only(i).html()
+            )}::end_content--snotes:content.end`;
         });
 
         while (dir == undefined && dir != '-1') {
@@ -50,6 +58,8 @@ export default function save() {
             dir = undefined;
             return toggleStartScreen();
         }
+
+        $('#doc_location').text(dir ? dir : '');
 
         FS.writeFile(dir, content).then(() => {
             toggleStartScreen();
