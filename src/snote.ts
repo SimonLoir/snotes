@@ -8,10 +8,9 @@ $(document).ready(async () => {
     setTimeout(() => {
         toggleStartScreen();
         if (env() == false) {
-            //toggleStartScreen();
             $('#ss-message').text(`SNotes is not available right now`);
         }
-    }, 2);
+    }, 200);
     let d = new docview();
 });
 save;

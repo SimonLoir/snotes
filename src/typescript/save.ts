@@ -7,6 +7,11 @@ let dir: string = undefined;
 $('#menu-save').click(() => {
     save();
 });
+$('body').keydown((e: KeyboardEvent) => {
+    if (e.keyCode == 83 && e.ctrlKey == true) {
+        save();
+    }
+});
 export function getSaveText(text: string) {
     return text;
 }

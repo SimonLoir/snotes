@@ -55,7 +55,7 @@ export default class docview {
                 .child('img')
                 .attr('src', image);
 
-            new Notes(data[i]);
+            new Notes(data ? data[i] : '');
         });
         $('#notes .rich-textarea')
             .only(0)
