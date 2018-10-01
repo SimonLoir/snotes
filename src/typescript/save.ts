@@ -43,6 +43,7 @@ export default function save() {
                 'text',
                 'C:\\Users\\simon\\Desktop\\1.snote'
             );
+
             let save = p.content.child('button').text('Sauvegarder ici');
             let cancel = p.content.child('button').text('Annuler');
             let x = new Promise((resolve: (data: string) => void) => {
@@ -52,6 +53,7 @@ export default function save() {
                 cancel.click(() => {
                     resolve('-1');
                 });
+                p.m.click(() => cancel.click());
             });
             let new_dir = await x;
 

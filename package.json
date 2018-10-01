@@ -32,7 +32,8 @@
     "build": {
         "appId": "simonloir.snotes",
         "win": {
-            "target": "nsis"
+            "target": "nsis",
+            "icon": "./src/images/favicon.ico"
         },
         "directories": {
             "output": "builds"

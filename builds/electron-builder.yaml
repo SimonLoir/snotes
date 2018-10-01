@@ -4,6 +4,7 @@ directories:
 appId: simonloir.snotes
 win:
   target: nsis
+  icon: ./src/images/favicon.ico
 files:
   - filter: '!firebase-bot/**/*'
 electronVersion: 1.8.8
