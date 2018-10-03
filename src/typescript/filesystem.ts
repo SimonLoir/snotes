@@ -11,6 +11,47 @@ if (env() == true) {
 }
 
 export default class FS {
+    public static readDir(directory: string) {
+        return new Promise((resolve: (data: string[][]) => void, reject) => {
+            directory = directory.replace('${os.dir}', dir);
+            if (fs == undefined) {
+            } else {
+                fs.readdir(
+                    directory,
+                    { withFileTypes: true },
+                    async (err: string, files: string[]) => {
+                        if (!err) {
+                            console.log(files);
+                            let xfile: any = [];
+                            files.forEach(async file => {
+                                let x = this.isDirectory(
+                                    directory + '/' + file
+                                );
+                                console.log(x);
+                                xfile.push(x);
+                            });
+                            console.log(xfile);
+
+                            Promise.all(xfile).then((values: any) =>
+                                resolve(values)
+                            );
+                        }
+                    }
+                );
+            }
+        });
+    }
+
+    private static async isDirectory(file: string) {
+        return new Promise((res: (e: string[]) => void, rej) => {
+            //console.log(file);
+            fs.stat(file, (err: any, stats: any) => {
+                if (err) res([file, 'false']);
+                res([file, stats.isDirectory().toString()]);
+            });
+        });
+    }
+
     public static readFile(file: string) {
         return new Promise((resolve: (data: string) => void, reject) => {
             console.log('read');
@@ -43,7 +84,7 @@ export default class FS {
                     content,
                     'utf8',
                     (err: string, data: string) => {
-                        if (err) throw err;
+                        if (err) reject(err);
                         resolve(data);
                     }
                 );

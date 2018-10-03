@@ -51,6 +51,9 @@
         document.ondragover = document.ondrop = (ev) => {
             ev.preventDefault()
         }
+        if (window.process) {
+            //alert(JSON.stringify(process.argv))
+        }
     </script>
     <script src="./dist/snote.bundle.js"></script>
     <script src="./src/js/pdf.js"></script>

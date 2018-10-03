@@ -118,6 +118,34 @@ export class ExtJsObject {
         return this;
     }
 
+    dblclick(toDo?: (event?: Event) => void, element?: string) {
+        for (var i = 0; i < this.node.length; i++) {
+            var e = this.node[i];
+
+            if (element === undefined) {
+                if (toDo !== undefined) {
+                    e.addEventListener('dblclick', toDo);
+                } else {
+                    e.dblclick();
+                }
+            } else if (toDo !== undefined) {
+                var x = e;
+                e.addEventListener('dblclick', function(event: MouseEvent) {
+                    if (x.querySelector(element) == event.target) {
+                        let xe: any = x.querySelector(element);
+                        xe.prototype.toDo = toDo;
+                        xe.toDo();
+                    }
+                });
+            } else {
+                var x = e;
+                let xe: any = x.querySelector(element);
+                xe.dblclick();
+            }
+        }
+        return this;
+    }
+
     /**
      * @param {Function|Undefined} toDo function that is called when somebody hovers on the element  or undefined or nothing
      * @param {String|Undefined} element specifies the element on which we are going to listen the hover.

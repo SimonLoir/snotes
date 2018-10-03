@@ -3,6 +3,7 @@ import toggleStartScreen from './startscreen';
 import FS from './filesystem';
 import { tmp } from './docview';
 import Popup, { buildInput } from './popup';
+import explorer from './file_explorer/explorer';
 let dir: string = undefined;
 $('#menu-save').click(() => {
     save();
@@ -15,7 +16,12 @@ $('body').keydown((e: KeyboardEvent) => {
 export function getSaveText(text: string) {
     return text;
 }
+
+let is_saving = false;
+
 export default function save() {
+    if (is_saving == true) return;
+    is_saving = true;
     if ($('#doc_location').text() == '') dir = undefined;
     else dir = $('#doc_location').text();
 
@@ -43,6 +49,24 @@ export default function save() {
                 'text',
                 'C:\\Users\\simon\\Desktop\\1.snote'
             );
+            directory.parent('.field').css('display', 'none');
+            let file_name = buildInput(
+                p.content,
+                'Nom du fichier',
+                'text',
+                '1.snote'
+            );
+            file_name.keyup(() => {
+                let dir = directory.value().split(/\\|\//g);
+                dir.pop();
+                directory.value(dir.join('/') + '/' + file_name.value());
+            });
+
+            let fileExplorer = new explorer(p.content);
+            fileExplorer.change(folder => {
+                directory.value(folder + file_name.value());
+            });
+            fileExplorer.load();
 
             let save = p.content.child('button').text('Sauvegarder ici');
             let cancel = p.content.child('button').text('Annuler');
@@ -63,13 +87,21 @@ export default function save() {
 
         if (dir == '-1') {
             dir = undefined;
+            is_saving = false;
             return toggleStartScreen();
         }
 
         $('#doc_location').text(dir ? dir : '');
 
-        FS.writeFile(dir, content).then(() => {
-            toggleStartScreen();
-        });
+        FS.writeFile(dir, content)
+            .then(() => {
+                toggleStartScreen();
+                is_saving = false;
+            })
+            .catch(e => {
+                alert(e);
+                toggleStartScreen();
+                is_saving = false;
+            });
     }, 200);
 }

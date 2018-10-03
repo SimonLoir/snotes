@@ -48,7 +48,7 @@ tools.map(e => e[0]).forEach(func => {
                 'insertHTML',
                 undefined,
                 `<p>
-                    <canvas data-process="tbd">::simonloir.smath.core.graph::</canvas>
+                    <canvas data-process="tbd">::simonloir.smath.core.graph::{"func0":{"visible": true,"color": "red","exp": "x","initial": "x"}}</canvas>
                 </p> `
             );
             document.execCommand('insertText', undefined, `\n`);
@@ -73,6 +73,7 @@ export default class Notes {
             .css('display', 'none')
             .html(default_html);
         el.get(0).addEventListener('blur', (e: FocusEvent) => {
+            if ($('.mask').count() > 0) return;
             e.preventDefault();
             e.stopPropagation();
             //@ts-ignore
