@@ -5,6 +5,10 @@ import Popup from '../popup';
 const canvasID = '::simonloir.smath.core.graph::';
 let id = 0;
 let saved: any = {};
+export function loadGraph(graph: ExtJsObject) {
+    console.log(graph);
+    saved[graph.attr('data-id')].m.reload();
+}
 export default class MathGraph {
     private c: ExtJsObject;
     private m: canvas;

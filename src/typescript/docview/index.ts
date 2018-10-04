@@ -4,6 +4,7 @@ import pdf2Base64Array from '../pdf2png';
 import env from '../env';
 import toggleStartScreen from '../startscreen';
 import Notes from '../notes';
+import { loadGraph } from '../notes/math';
 export const tmp = '${os.dir}/.snote/.tmp';
 export default class docview {
     constructor() {
@@ -36,7 +37,7 @@ export default class docview {
             if (ext == 'pdf') getDoc = this.openPDF(file);
             if (ext == 'snote') getDoc = this.openSDoc(file);
             getDoc.then((data: any) => {
-                this.loadFromTmp(data);
+                this.loadFromTmpAndFromData(data);
                 //@ts-ignore
                 if (ext == 'snote' && base_file.path != undefined)
                     //@ts-ignore
@@ -45,7 +46,7 @@ export default class docview {
         });
     }
 
-    private async loadFromTmp(data: string[]) {
+    private async loadFromTmpAndFromData(data: string[]) {
         let file = await FS.readFile(tmp);
         file = file.trim();
         let images = file.split('\n');
@@ -78,7 +79,11 @@ export default class docview {
             $('#notes .rich-textarea').css('display', 'none');
             $('#notes .rich-textarea')
                 .only(i)
-                .css('display', 'block');
+                .css('display', 'block')
+                .children('canvas')
+                .forEach(function() {
+                    loadGraph($(this));
+                });
             $('#docs img')
                 .only(i)
                 .addClass('visible');
