@@ -10,6 +10,7 @@ export default class docview {
         $('#docs').get(0).ondrop = async (e: DragEvent) => {
             e.stopPropagation();
             e.preventDefault();
+            if ($('#docs #open').count() == 0) return;
             var files = e.dataTransfer.items; // Array of all files
             let file = files[0].getAsFile();
             this.openDoc(file);

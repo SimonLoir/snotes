@@ -3,11 +3,15 @@ import Parser, { MathObject } from '../../../lib/smath/src/parser.v2';
 import { $, ExtJsObject } from '../extjs';
 import Popup from '../popup';
 const canvasID = '::simonloir.smath.core.graph::';
+let id = 0;
+let saved: any = {};
 export default class MathGraph {
     private c: ExtJsObject;
     private m: canvas;
     private func: string[];
     constructor(existing?: ExtJsObject) {
+        id++;
+
         if (existing == undefined)
             this.c = $('body')
                 .child('div')
@@ -26,6 +30,11 @@ export default class MathGraph {
             height: '300px',
             borderRadius: '4px'
         });
+
+        this.c.attr('data-id', 'func_x_graph' + id);
+
+        saved[this.c.attr('data-id')] = this;
+        console.log(saved);
 
         this.m = new canvas(this.c.get(0));
         if (existing != undefined) {
