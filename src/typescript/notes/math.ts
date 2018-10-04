@@ -49,6 +49,14 @@ export default class MathGraph {
             this.func = JSON.parse(toDraw);
             this.drawForFirstTime();
         }
+        this.m.onupdate = () => {
+            console.log('has updated');
+            this.c.attr('data-opts', JSON.stringify(this.m.getValues()));
+        };
+        let values = this.c.attr('data-opts');
+        console.log(values);
+        if (values && values != '') this.m.setValues(JSON.parse(values));
+        console.log(this.m.getValues());
     }
 
     public drawForFirstTime() {
