@@ -1,5 +1,6 @@
 import { $, ExtJsObject } from '../extjs';
 import MathGraph from './math';
+import CodeEditor from './code';
 let tools = [
     ['undo', 'undo'],
     ['redo', 'redo'],
@@ -56,6 +57,17 @@ tools.map(e => e[0]).forEach(func => {
             canvas.attr('data-process', 'done');
             let g = new MathGraph(canvas);
             g.reload();
+        } else if (func == 'code') {
+            document.execCommand('insertText', undefined, `\n`);
+            document.execCommand(
+                'insertHTML',
+                undefined,
+                `<div data-process="tbd" data-type="js" contenteditable="false" class="scode-editor" style="font-family: 'source-code-pro';"></div>`
+            );
+            document.execCommand('insertText', undefined, `\n`);
+            let editor = $('#notes').children('[data-process="tbd"]');
+            new CodeEditor(editor);
+            editor.attr('data-process', 'done');
         } else if (func == 'hiliteColor') {
             document.execCommand(func, undefined, 'yellow');
         } else if (func == 'formatBlock') {
@@ -74,8 +86,15 @@ export default class Notes {
             .html(default_html);
         el.get(0).addEventListener('blur', (e: FocusEvent) => {
             if ($('.mask').count() > 0) return;
+            if (
+                e.relatedTarget &&
+                $(e.relatedTarget)
+                    .parent('.scode-editor')
+                    .count() > 0
+            )
+                return;
             e.preventDefault();
-            e.stopPropagation();
+            console.log(e.relatedTarget);
             //@ts-ignore
             e.target.focus();
         });

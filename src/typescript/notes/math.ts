@@ -113,6 +113,7 @@ export default class MathGraph {
                 this.func = d;
                 this.m.funcs = d;
                 this.saveState();
+                this.reload();
             });
             this.saveState();
         });

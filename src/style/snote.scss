@@ -1,8 +1,11 @@
 @import './start_menu/index.scss';
 @import './main/index.scss';
 body,
-* {
+input,
+textarea,
+button {
     font-family: 'Montserrat', sans-serif;
+    color: black;
 }
 
 button {
