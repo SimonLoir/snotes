@@ -4,6 +4,7 @@ import docview from './typescript/docview';
 import toggleStartScreen from './typescript/startscreen';
 import env from './typescript/env';
 import save from './typescript/save';
+import { exportHTML } from './typescript/export';
 $(document).ready(async () => {
     setTimeout(() => {
         toggleStartScreen();
@@ -14,3 +15,4 @@ $(document).ready(async () => {
     let d = new docview();
 });
 save;
+exportHTML;
