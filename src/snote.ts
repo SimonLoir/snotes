@@ -10,7 +10,7 @@ $(document).ready(async () => {
         if (env() == false) {
             $('#ss-message').text(`SNotes is not available right now`);
         }
-    }, 200);
+    }, 20);
     let d = new docview();
 });
 save;
