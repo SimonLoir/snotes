@@ -8,6 +8,7 @@
         "prod": "webpack -p",
         "start": "electron .",
         "dist": "build --windows --ia32 --x64",
+        "darwin": "build --mac --ia32 --x64",
         "sw": "node build.sw.js"
     },
     "author": "Simon Loir",
