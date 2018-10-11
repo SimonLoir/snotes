@@ -7,4 +7,4 @@ win:
   icon: ./src/images/favicon.ico
 files:
   - filter: '!firebase-bot/**/*'
-electronVersion: 1.8.8
+electronVersion: 3.0.4
