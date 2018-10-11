@@ -14,9 +14,7 @@
     },
     "author": "Simon Loir",
     "license": "MIT",
-    "dependencies": {
-        "electron-spell-check-provider": "^1.1.1"
-    },
+    "dependencies": {},
     "devDependencies": {
         "css-loader": "^0.28.11",
         "electron": "^3.0.4",
