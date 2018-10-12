@@ -117,5 +117,9 @@ export default class Notes {
                 }, 200);
             }
         });
+        el.children('.scode-editor').forEach(function() {
+            let e = $(this);
+            new CodeEditor(e);
+        });
     }
 }

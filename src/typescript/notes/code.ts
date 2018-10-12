@@ -13,10 +13,18 @@ export default class CodeEditor {
 
         this.c.cssObj({
             width: '100%',
-            height: '300px',
             borderRadius: '4px'
         });
 
-        new editor(this.c.get(0));
+        const lineUpdate = () => {
+            this.c.css('height', 'auto');
+            requestAnimationFrame(() => {
+                let h = this.c.children('.code-editor-colors').get(0)
+                    .scrollHeight;
+                this.c.css('height', h + 'px');
+            });
+        };
+
+        let e = new editor(this.c.get(0), lineUpdate);
     }
 }

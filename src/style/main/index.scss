@@ -89,12 +89,17 @@ main {
         }
     }
     & #notes {
+        position: absolute;
         right: 0;
         padding: 0;
         margin: 0;
         left: 50vw;
         background: #fcfcfc;
         & #tools {
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
             overflow: hidden;
             background: white;
             border-bottom: 1px solid lightgray; //white-space: nowrap;
@@ -120,6 +125,7 @@ main {
             right: 0;
             bottom: 0;
             padding: 8px;
+            overflow: auto;
         }
     }
 }
