@@ -35,13 +35,4 @@ export function exportHTML() {
         xp.insertBefore(img.get(0), this);
         $(this).remove();
     });
-    setTimeout(() => {
-        requestAnimationFrame(() => {
-            html2canvas(p.content.get(0)).then(canvas => {
-                $('body')
-                    .child('img')
-                    .attr('src', canvas.toDataURL());
-            });
-        });
-    }, 1000);
 }

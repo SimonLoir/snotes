@@ -47,6 +47,9 @@ export default class docview {
     }
 
     private async loadFromTmpAndFromData(data: string[]) {
+        $('#ss-message').text(
+            "Lecture du fichier... Préparation à l'affichage"
+        );
         let file = await FS.readFile(tmp);
         file = file.trim();
         let images = file.split('\n');
@@ -142,7 +145,9 @@ export default class docview {
             FS.writeFile(tmp, images.join('\n')).then(() => {
                 console.log('saved to temp directory');
                 resolve();
-                $('#ss-message').text('Disponible le répertoire temporaire');
+                $('#ss-message').text(
+                    'Disponible le répertoire temporaire - préparation du fichier'
+                );
             });
         });
     }
