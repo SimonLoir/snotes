@@ -28,6 +28,10 @@ export default function save() {
     toggleStartScreen();
     $('#ss-message').text('Sauvegarde');
     setTimeout(async () => {
+        $('canvas').forEach(function() {
+            let canvas: HTMLCanvasElement = this;
+            $(canvas).attr('data-url', '');
+        });
         let content = '';
         let notes = $('#notes .rich-textarea');
         let images = $('#docs img');

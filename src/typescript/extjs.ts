@@ -364,7 +364,7 @@ export class ExtJsObject {
      * Returns the nearest parent of the element's
      * @param selector The selector of the nearest parent
      */
-    parent(selector: string) {
+    parent(selector: string = undefined) {
         var parents = [];
 
         for (var i = 0; i < this.node.length; i++) {

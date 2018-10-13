@@ -14,7 +14,7 @@ export default async function pdf2Base64Array(file: any) {
             let page = await doc.getPage(i + 1);
             let canvas = $('#tmp').child('canvas');
             let ctx = canvas.get(0).getContext('2d');
-            let viewport = page.getViewport(1);
+            let viewport = page.getViewport(2);
             canvas.attr('width', viewport.width);
             canvas.attr('height', viewport.height);
             all.push(
