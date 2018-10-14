@@ -34,13 +34,13 @@ export default function save() {
         });
         let content = '';
         let notes = $('#notes .rich-textarea');
-        let images = $('#docs img');
+        let images = $('#docs .xsvg');
         notes.forEach(i => {
-            content += `[img]${images
+            content += `${images
                 .only(i)
-                .attr('src')}[end_img]${getSaveText(
-                notes.only(i).html()
-            )}::end_content--snotes:content.end`;
+                .html()}<!--snotes.content.separator-->${notes
+                .only(i)
+                .html()}<!--snotes.slide.separator-->`;
         });
 
         while (dir == undefined && dir != '-1') {

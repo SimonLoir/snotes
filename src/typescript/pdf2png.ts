@@ -5,7 +5,7 @@ import '../js/pdf.worker';
 function readDoc(doc: any) {
     return PDFJS.getDocument({ url: doc });
 }
-export default async function pdf2Base64Array(file: any) {
+export default async function pdf2SVG(file: any) {
     return new Promise(async (resolve: (res: string[]) => void) => {
         let doc = await readDoc(file);
         $('#tmp').html('');
@@ -29,7 +29,13 @@ export default async function pdf2Base64Array(file: any) {
             $('#tmp canvas').forEach(function() {
                 console.log(this);
                 let c: HTMLCanvasElement = this;
-                res.push(c.toDataURL());
+                res.push(
+                    `<svg viewBox="0 0 ${c.width} ${
+                        c.height
+                    }"><image x="0" y="0" width="${c.width}" height="${
+                        c.height
+                    }" xlink:href="${c.toDataURL()}" /></svg>`
+                );
             });
             $('#tmp canvas').remove();
             resolve(res);

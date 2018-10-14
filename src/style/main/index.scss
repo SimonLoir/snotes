@@ -43,7 +43,8 @@ main {
         margin: 0;
         right: 50vw;
         background: #eee;
-        & img {
+        & img,
+        & svg {
             display: none;
             object-fit: contain;
             max-width: calc(100% - 10px);
@@ -61,7 +62,8 @@ main {
             color: #f99758;
         }
         & #open,
-        & img {
+        & img,
+        & svg {
             position: absolute;
             top: 50%;
             left: 50%;
