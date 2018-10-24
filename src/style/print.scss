@@ -1,0 +1,16 @@
+@media print {
+    .break {
+        page-break-after: always;
+    }
+    * {
+        -webkit-print-color-adjust: exact !important;
+    }
+}
+
+body,
+input,
+textarea,
+button {
+    font-family: 'Montserrat', sans-serif;
+    color: black;
+}

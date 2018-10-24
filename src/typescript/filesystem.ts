@@ -15,6 +15,9 @@ export default class FS {
         return new Promise((resolve: (data: string[][]) => void, reject) => {
             directory = directory.replace('${os.dir}', dir);
             if (fs == undefined) {
+                AR.GET('server/dir/' + directory, data => {
+                    resolve(JSON.parse(data));
+                });
             } else {
                 fs.readdir(
                     directory,

@@ -1,0 +1,2 @@
+RewriteEngine on
+RewriteRule ^dir/(.*)$ index.php?readdir=$1

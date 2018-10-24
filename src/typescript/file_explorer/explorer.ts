@@ -8,7 +8,6 @@ export default class explorer {
         let e = parent.child('div');
         e.addClass('fileExplorer');
         this.e = e;
-        //this.load();
     }
 
     public async load(dir: string = '${os.dir}') {

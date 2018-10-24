@@ -7,18 +7,20 @@ $('#menu-export').click(() => {
 
 let is_saving = false;
 
-export function exportHTML() {
+export async function exportHTML() {
     let content = '';
     $('canvas').forEach(function() {
         let canvas: HTMLCanvasElement = this;
         $(canvas).attr('data-url', canvas.toDataURL());
     });
     let notes = $('#notes .rich-textarea');
-    let images = $('#docs img');
+    let images = $('#docs .xsvg');
     notes.forEach(i => {
-        content += `<img class="img" src="${images
+        content += `${images
             .only(i)
-            .attr('src')}"></img><br />${notes.only(i).html()}`;
+            .html()}<div class="break"></div>${notes
+            .only(i)
+            .html()}<div class="break"></div>`;
     });
     let p = new Popup();
     p.content.html(content);
@@ -29,10 +31,34 @@ export function exportHTML() {
     });
     p.content.children('canvas').forEach(function() {
         let p = $(this).parent();
+        console.log(this);
         let xp: HTMLDivElement = p.get(0);
         let img = p.child('img');
         img.attr('src', $(this).attr('data-url'));
         xp.insertBefore(img.get(0), this);
         $(this).remove();
     });
+    console.log(await (await fetch('./dist/export.bundle.js')).text());
+    p.m.click();
+    let htmlBlob = new Blob(
+        [
+            `<!DOCTYPE html>
+            <html lang="fr">
+            <head>
+              <meta charset="utf-8">
+              <title>snote.html</title>
+              <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+            </head>
+            <body>
+            ${p.content.html()}
+            
+            <script>${await (await fetch(
+                './dist/export.bundle.js'
+            )).text()}</script>
+            </body>
+            </html>`
+        ],
+        { type: 'text/html' }
+    );
+    open(URL.createObjectURL(htmlBlob), '_blank');
 }

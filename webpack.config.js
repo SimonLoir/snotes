@@ -3,7 +3,8 @@ const path = require('path');
 module.exports = {
     target: 'node',
     entry: {
-        snote: './src/snote'
+        snote: './src/snote',
+        export: './src/export'
     },
     module: {
         rules: [

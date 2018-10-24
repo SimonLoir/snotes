@@ -1,11 +1,13 @@
 /**
  *  On déclare des variables de base
  */
-const { app, globalShortcut, Menu } = require('electron');
+const { app, globalShortcut, Menu, ipcMain, shell } = require('electron');
 const electron = require('electron');
 const bw = electron.BrowserWindow;
 const path = require('path');
 const url = require('url');
+const os = require('os');
+const fs = require('fs');
 
 /**
  * Quand l'app est prête.
@@ -38,17 +40,16 @@ app.on('ready', function() {
     app.on('window-all-closed', function() {
         app.quit();
     });
-
-    const menu = Menu.buildFromTemplate([
-        /*
-        {
-            label: 'File',
-            submenu: [
-                {
-                    label: 'Save'
+    ipcMain.on('print', event => {
+        const pdfPath = path.join(os.tmpdir(), 'print.pdf');
+        event.sender.webContents.printToPDF({}, function(error, data) {
+            if (error) throw error;
+            fs.writeFile(pdfPath, data, function(error) {
+                if (error) {
+                    throw error;
                 }
-            ]
-        }*/
-    ]);
-    //Menu.setApplicationMenu(null);
+                shell.openItem(pdfPath);
+            });
+        });
+    });
 });
