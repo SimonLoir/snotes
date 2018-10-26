@@ -4,6 +4,16 @@ import toggleStartScreen from '../startscreen';
 import Notes from '../notes';
 import { loadGraph } from '../notes/math';
 export const tmp = '${os.dir}/.snote/.tmp';
+
+$('#menu-open-from-scloud').click(() => {
+    //$('#doc_location').text('scloud://');
+    let w = window.open('scloud/');
+    w.addEventListener('hashchange', e => {
+        let xhash = w.location.hash;
+        xhash = xhash.replace('#', '');
+    });
+});
+
 export default class docview {
     private images: string[] = [];
     constructor() {

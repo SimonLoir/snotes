@@ -4,12 +4,14 @@ import FS from './filesystem';
 import { tmp } from './docview';
 import Popup, { buildInput } from './popup';
 import explorer from './file_explorer/explorer';
+import env from './env';
 let dir: string = undefined;
 $('#menu-save').click(() => {
     save();
 });
 $('body').keydown((e: KeyboardEvent) => {
     if (e.keyCode == 83 && e.ctrlKey == true) {
+        e.preventDefault();
         save();
     }
 });
@@ -26,23 +28,35 @@ export default function save() {
     else dir = $('#doc_location').text();
 
     toggleStartScreen();
+
+    $('canvas').forEach(function() {
+        let canvas: HTMLCanvasElement = this;
+        $(canvas).attr('data-url', '');
+    });
+    let content = '';
+    let notes = $('#notes .rich-textarea');
+    let images = $('#docs .xsvg');
+    notes.forEach(i => {
+        content += `${images
+            .only(i)
+            .html()}<!--snotes.content.separator-->${notes
+            .only(i)
+            .html()}<!--snotes.slide.separator-->`;
+    });
+
+    if (env() != true) {
+        let b = new Blob([content]);
+        let url = URL.createObjectURL(b);
+        let a = document.createElement('a');
+        a.href = url;
+        a.download = 'document.snote';
+        a.click();
+        is_saving = false;
+        return toggleStartScreen();
+    }
+
     $('#ss-message').text('Sauvegarde');
     setTimeout(async () => {
-        $('canvas').forEach(function() {
-            let canvas: HTMLCanvasElement = this;
-            $(canvas).attr('data-url', '');
-        });
-        let content = '';
-        let notes = $('#notes .rich-textarea');
-        let images = $('#docs .xsvg');
-        notes.forEach(i => {
-            content += `${images
-                .only(i)
-                .html()}<!--snotes.content.separator-->${notes
-                .only(i)
-                .html()}<!--snotes.slide.separator-->`;
-        });
-
         while (dir == undefined && dir != '-1') {
             let p = new Popup();
             p.content.child('h2').text('Sauvegarder sous');

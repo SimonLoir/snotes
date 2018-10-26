@@ -93,8 +93,9 @@ export default class Notes {
                     .count() > 0
             )
                 return;
+            console.log(e, e.relatedTarget);
             e.preventDefault();
-            console.log(e.relatedTarget);
+            e.stopPropagation();
             //@ts-ignore
             e.target.focus();
         });
