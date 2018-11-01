@@ -9,7 +9,6 @@
     "prettier.tabWidth": 4,
     "prettier.singleQuote": true,
     "vsicons.dontShowNewVersionMessage": true,
-    "workbench.colorTheme": "Cobalt2",
     "search.location": "panel",
     "javascript.updateImportsOnFileMove.enabled": "always",
     "dart.flutterSdkPath": "C:\\flutter",
