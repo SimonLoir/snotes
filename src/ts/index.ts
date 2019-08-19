@@ -1,3 +1,2 @@
-import '../scss/index.scss'; //import the style
-
-// The js code goes here
+import '../scss/index.scss';
+import isNodeEnv from './tools/env';
