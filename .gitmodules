@@ -1,6 +1,0 @@
-[submodule "lib/smath"]
-	path = lib/smath
-	url = https://github.com/SimonLoir/SMath.git
-[submodule "lib/scode-code-editor-interface"]
-	path = lib/scode-code-editor-interface
-	url = https://github.com/SimonLoir/scode-editor-intreface.git
