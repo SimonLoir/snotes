@@ -6,6 +6,7 @@ import { loadGraph } from '../notes/math';
 export const tmp = '${os.dir}/.snote/.tmp';
 
 $('#menu-open-from-scloud').click(() => {
+    return alert("SCloud n'est pas encore disponible :-(");
     //$('#doc_location').text('scloud://');
     let w = window.open('scloud/');
     w.addEventListener('hashchange', e => {
