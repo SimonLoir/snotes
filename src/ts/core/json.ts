@@ -8,6 +8,7 @@ export interface snoteDocument {
             y: number;
             z: number;
         }[];
+        htmlContent: string;
     }[];
     author: string;
 }
