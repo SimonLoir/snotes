@@ -1,29 +1,31 @@
 import { $, ExtJsObject } from '../tools/extjs';
+import './style.scss';
 
 export default class RichTextBox {
+    private controls: ExtJsObject;
     constructor(
         default_html = 'Default text',
         appendTo: ExtJsObject = $('body')
     ) {
-        const el = appendTo
+        const base = appendTo.child('div').addClass('rich-textarea');
+        this.controls = base.child('div').addClass('controls');
+        this.addControls();
+
+        const el = base
             .child('div')
-            .addClass('rich-textarea')
+            .addClass('text')
             .attr('spellcheck', 'true')
             .attr('contenteditable', 'true')
             .html(default_html);
 
         el.get(0).addEventListener('blur', (e: FocusEvent) => {
-            /*
-            -----old code, should be verified
-            if ($('.mask').count() > 0) return;
             if (
                 e.relatedTarget &&
                 $(e.relatedTarget)
-                    .parent('.scode-editor')
+                    .parent('.matrix')
                     .count() > 0
             )
                 return;
-            console.log(e, e.relatedTarget);*/
             e.preventDefault();
             e.stopPropagation();
             //@ts-ignore
@@ -40,22 +42,22 @@ export default class RichTextBox {
                             'insertHTML',
                             true,
                             `
-                        <span style="display: inline-block; background: red;vertical-align: middle;position: relative;">
-                        <table style="display: inline-table; vertical-align: top;">
+                        <span class="matrix" contenteditable="false">
+                        <table contenteditable="true">
                             <tr>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
                             </tr>
                             <tr>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
                             </tr>
                             <tr>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
                             </tr>
                         </table>
                         </span> `
@@ -67,5 +69,14 @@ export default class RichTextBox {
                     break;
             }
         });
+    }
+
+    private addControls() {
+        this.controls
+            .child('span')
+            .text('test')
+            .click(() => {
+                document.execCommand('insertUnorderedList');
+            });
     }
 }
