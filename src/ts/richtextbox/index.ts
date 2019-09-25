@@ -35,6 +35,7 @@ export default class RichTextBox {
             const c = e.keyCode;
             switch (c) {
                 case 9:
+                    e.preventDefault();
                     if (e.ctrlKey) {
                         e.preventDefault();
                         e.stopPropagation();
@@ -72,11 +73,44 @@ export default class RichTextBox {
     }
 
     private addControls() {
-        this.controls
-            .child('span')
-            .text('test')
-            .click(() => {
-                document.execCommand('insertUnorderedList');
+        const text_type = this.controls.child('select');
+        [
+            { title: '' },
+            { title: 'Titre 1', value: '<h1>', action: 'formatBlock' },
+            { title: 'Titre 2', value: '<h2>', action: 'formatBlock' },
+            { title: 'Titre 3', value: '<h3>', action: 'formatBlock' },
+            { title: 'Titre 4', value: '<h4>', action: 'formatBlock' }
+        ].forEach(e => {
+            text_type
+                .child('option')
+                .attr('value', e.title)
+                .text(e.title);
+            text_type.change(() => {
+                if (text_type.value() == e.title) {
+                    console.log('e');
+                    document.execCommand(e.action, undefined, e.value);
+                }
             });
+        });
+
+        [
+            { icon: 'undo', command: 'undo', title: 'Annuler' },
+            { icon: 'redo', command: 'redo', title: 'Refaire' },
+            { icon: 'format_bold', command: 'bold', title: 'Mettre en gras' },
+            { icon: 'format_italic', command: 'italic' },
+            { icon: 'format_strikethrough', command: 'strikeThrough' },
+            { icon: 'format_indent_increase', command: 'indent' },
+            { icon: 'format_indent_decrease', command: 'outdent' },
+            { icon: 'format_underlined', command: 'underline' }
+        ].forEach(e => {
+            this.controls
+                .child('span')
+                .addClass('material-icons')
+                .attr('title', e.title || '')
+                .text(e.icon)
+                .click(() => {
+                    document.execCommand(e.command);
+                });
+        });
     }
 }

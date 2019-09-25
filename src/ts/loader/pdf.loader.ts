@@ -24,11 +24,11 @@ export default class PDFLoader {
                     viewport: viewport
                 });
                 images.push(
-                    `<svg viewBox="0 0 ${canvas.width} ${
-                        canvas.height
-                    }"><image x="0" y="0" width="${canvas.width}" height="${
-                        canvas.height
-                    }" xlink:href="${canvas.toDataURL()}" /></svg>`
+                    canvas.width +
+                        'x' +
+                        canvas.height +
+                        '///' +
+                        canvas.toDataURL()
                 );
                 canvas.remove();
             }

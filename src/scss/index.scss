@@ -6,3 +6,14 @@ body {
     width: 100vw;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+
+.rich-textarea {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    height: 100vh;
+    width: 50vw;
+    border-left: 1px solid rgb(215, 215, 215);
+}

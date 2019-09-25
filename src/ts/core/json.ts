@@ -2,11 +2,10 @@ export interface snoteDocument {
     type: 'snote';
     version: '2';
     pages: {
-        image: string; //base64 string
+        image: string; //svg image
         objects: {
             x: number;
             y: number;
-            z: number;
         }[];
         htmlContent: string;
     }[];

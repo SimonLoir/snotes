@@ -4,29 +4,45 @@ import { read } from 'fs';
 import { snoteDocument } from '../core/json';
 
 export default class FileLoader {
-    private data: Promise<snoteDocument>;
+    public snoteDoc: Promise<snoteDocument>;
     constructor() {
-        let i = $('body')
-            .child('input')
-            .change(async () => {
-                const base_file: File = i.get(0).files[0];
-                const ext = base_file.name.split('.').reverse()[0];
-                let images: string[];
+        this.snoteDoc = new Promise((resolve: (doc: snoteDocument) => void) => {
+            let i = $('body')
+                .child('input')
+                .change(async () => {
+                    const base_file: File = i.get(0).files[0];
+                    console.log(base_file);
+                    const ext = base_file.name.split('.').reverse()[0];
+                    let images: string[];
 
-                if (ext == 'pdf')
-                    images = await new PDFLoader().load(base_file);
+                    if (ext == 'pdf')
+                        images = await new PDFLoader().load(base_file);
 
-                if (ext == 'snote')
-                    return JSON.stringify(
-                        await this.readFilebAsText(base_file)
-                    );
+                    if (ext == 'snote')
+                        return resolve(
+                            JSON.parse(await this.readFilebAsText(base_file))
+                        );
 
-                console.log(images);
-                images.forEach(i => {
-                    document.body.innerHTML += i;
-                });
-            })
-            .attr('type', 'file');
+                    const snoteDoc: snoteDocument = {
+                        type: 'snote',
+                        version: '2',
+                        pages: [],
+                        author: 'snote'
+                    };
+
+                    images.forEach(i => {
+                        snoteDoc.pages.push({
+                            image: i,
+                            objects: [],
+                            htmlContent: 'Hello world'
+                        });
+                    });
+
+                    resolve(snoteDoc);
+                })
+                .attr('type', 'file')
+                .click();
+        });
     }
 
     private readFilebAsText(file: File) {
