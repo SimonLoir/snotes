@@ -1,3 +1,5 @@
+import RichTextBox from '../richtextbox';
+
 export interface snoteDocument {
     type: 'snote';
     version: '2';
@@ -8,6 +10,7 @@ export interface snoteDocument {
             y: number;
         }[];
         htmlContent: string;
+        richTextBox?: RichTextBox;
     }[];
     author: string;
 }

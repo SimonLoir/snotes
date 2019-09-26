@@ -9,6 +9,7 @@ body {
 
 
 .rich-textarea {
+    z-index: 85;
     position: absolute;
     top: 0;
     right: 0;
@@ -16,4 +17,51 @@ body {
     height: 100vh;
     width: 50vw;
     border-left: 1px solid rgb(215, 215, 215);
+}
+
+.workspace {
+    z-index: 90;
+    background: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    height: 100vh;
+    width: calc(50vw - 1px);
+
+    .flip {
+        background: white;
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translate(50%, -50%);
+        border: 1px solid rgb(215, 215, 215);
+
+        padding: 2px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        border-radius: 4px;
+        cursor: col-resize;
+
+        & i {
+            vertical-align: middle;
+        }
+
+        opacity: 0;
+
+        transition: 0.75s;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    $controls-height: 30px;
+    $padding: 12px;
+    @import "../ts/richtextbox/_controls";
+
+
+    .controls {
+        @extend %controls;
+    }
 }

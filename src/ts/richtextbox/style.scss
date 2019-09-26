@@ -21,32 +21,10 @@
 
     $controls-height: 30px;
     $padding: 12px;
+    @import "controls";
 
     .controls {
-        background: rgb(242, 242, 242);
-        padding: $padding;
-        height: $controls-height;
-        position: absolute;
-        top: 0;
-        right: 0;
-        left: 0;
-        border-bottom: 1px solid rgb(215, 215, 215);
-
-        .material-icons {
-            display: inline-block;
-            height: 30px;
-            line-height: 30px;
-            vertical-align: middle;
-            color: rgb(86, 86, 86);
-            padding-left: 7px;
-            padding-right: 7px;
-            cursor: pointer;
-        }
-
-        select {
-            border: 1px solid rgb(197, 197, 197);
-            color: rgb(60, 60, 60);
-        }
+        @extend %controls
     }
 
     .text {
