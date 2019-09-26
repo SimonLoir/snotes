@@ -2,7 +2,7 @@ import RichTextBox from '../richtextbox';
 
 export interface snoteDocument {
     type: 'snote';
-    version: '2';
+    version: number;
     pages: {
         image: string; //svg image
         objects: {

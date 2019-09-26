@@ -25,16 +25,16 @@ export default class FileLoader {
 
                     const snoteDoc: snoteDocument = {
                         type: 'snote',
-                        version: '2',
+                        version: 3,
                         pages: [],
-                        author: 'snote'
+                        author: 'snote',
                     };
 
-                    images.forEach(i => {
+                    images.forEach((i) => {
                         snoteDoc.pages.push({
                             image: i,
                             objects: [],
-                            htmlContent: 'Hello world'
+                            htmlContent: '',
                         });
                     });
 
@@ -49,7 +49,7 @@ export default class FileLoader {
         const reader = new FileReader();
 
         return new Promise((resolve: (e: string) => void) => {
-            reader.addEventListener('loadend', e => {
+            reader.addEventListener('loadend', (e) => {
                 //@ts-ignore
                 resolve(e.srcElement.result);
             });

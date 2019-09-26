@@ -15,26 +15,23 @@
 }
 
 .rich-textarea {
-    position: absolute;
-    height: 600px;
-    width: 600px;
-
     $controls-height: 30px;
     $padding: 12px;
-    @import "controls";
+    @import 'controls';
 
     .controls {
-        @extend %controls
+        @extend %controls;
     }
 
     .text {
         outline: none;
         position: absolute;
-        top: #{$controls-height + 2 * $padding};
+        top: #{$controls-height + 2 * $padding + 1px};
         right: 0;
         left: 0;
         bottom: 0;
         padding: 25px;
         overflow: auto;
+        background: white;
     }
 }

@@ -7,7 +7,6 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-
 .rich-textarea {
     z-index: 85;
     position: absolute;
@@ -58,10 +57,62 @@ body {
 
     $controls-height: 30px;
     $padding: 12px;
-    @import "../ts/richtextbox/_controls";
-
+    @import '../ts/richtextbox/_controls';
 
     .controls {
         @extend %controls;
+    }
+
+    .slides {
+        position: absolute;
+        top: #{$controls-height + 2 * $padding + 1px};
+        left: 0;
+        right: 0;
+        bottom: 55px;
+        //background: grey;
+        .welcome-wrapper {
+            position: absolute;
+            text-align: center;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50%;
+            color: rgb(86, 86, 86);
+            & img {
+                display: block;
+                position: relative;
+                width: 400px;
+                max-width: 80%;
+                margin: auto;
+                margin-bottom: 35px;
+            }
+        }
+    }
+
+    .slides_switcher {
+        position: absolute;
+        bottom: 5px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.85);
+        color: white;
+
+        border-radius: 4px;
+        user-select: none;
+        span {
+            vertical-align: middle;
+            display: inline-block;
+            line-height: 30px;
+            padding: 8px;
+            //padding-top: 15px;
+            //padding-bottom: 15px;
+            &.current_page {
+                font-size: 18px;
+            }
+            &.next,
+            &.previous {
+                cursor: pointer;
+            }
+        }
     }
 }
