@@ -24,6 +24,8 @@ let snoteDoc: snoteDocumentLoader;
         icon: 'save',
         title: 'Sauvegarder',
         command: () => {
+            if (snoteDoc == undefined)
+                return alert('Aucun document à sauvegarder');
             snoteDoc.save();
         }
     },
@@ -49,3 +51,9 @@ const flipper: ExtJsObject = workspace.child('div').addClass('flip')
             </i>`);
 
 new RichTextBox();
+
+//test- ok
+document.body.addEventListener('contextmenu', e => {
+    alert('ok');
+    e.preventDefault();
+});
