@@ -9,11 +9,11 @@ export default class PDFLoader {
                 throw "Erreur lors du chargement : ce fichier n'est pas un PDF";
 
             const doc = await PDFJS.getDocument({ url: file });
-            console.log(doc);
+            //console.log(doc);
             const images: string[] = [];
             for (let i = 0; i < doc.numPages; i++) {
                 const page = await doc.getPage(i + 1);
-                console.log(page);
+                //console.log(page);
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
                 const viewport = page.getViewport(2);
@@ -21,7 +21,7 @@ export default class PDFLoader {
                 canvas.setAttribute('height', viewport.height);
                 await page.render({
                     canvasContext: ctx,
-                    viewport: viewport
+                    viewport: viewport,
                 });
                 images.push(
                     canvas.width +

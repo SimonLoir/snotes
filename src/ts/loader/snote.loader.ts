@@ -3,8 +3,8 @@ import RichTextBox from '../richtextbox';
 import { $ } from '../tools/extjs';
 
 export default class snoteDocumentLoader {
-    constructor(private doc: snoteDocument) {
-        console.log(doc);
+    constructor(public doc: snoteDocument) {
+        //console.log(doc);
         if (doc.pages.length < 1) {
             alert('Document non valide !');
             throw 'Erreur document';
@@ -12,9 +12,13 @@ export default class snoteDocumentLoader {
         switch (doc.version) {
             case 3:
                 doc.pages.forEach((page) => {
+                    const page_image_split = page.image.split('///');
                     page.richTextBox = new RichTextBox(page.htmlContent);
+                    page.imageBox = $('.slides').child('img');
+                    page_image_split.splice(0, 1);
+                    page.imageBox.attr('src', page_image_split.join('///'));
                 });
-                console.log(doc.pages);
+                //console.log(doc.pages);
                 $('.slides_switcher').remove();
                 let page = 0;
                 const slide_switcher = $('.workspace')
@@ -34,8 +38,13 @@ export default class snoteDocumentLoader {
                     );
 
                     doc.pages.forEach((p, i) => {
-                        if (page == i) p.richTextBox.show();
-                        else p.richTextBox.hide();
+                        if (page == i) {
+                            p.richTextBox.show();
+                            p.imageBox.css('display', 'block');
+                        } else {
+                            p.richTextBox.hide();
+                            p.imageBox.css('display', 'none');
+                        }
                     });
                 };
 
@@ -57,6 +66,8 @@ export default class snoteDocumentLoader {
                         }
                         updateView();
                     });
+
+                $('.welcome-wrapper').css('display', 'none');
                 break;
 
             default:
@@ -65,11 +76,9 @@ export default class snoteDocumentLoader {
         }
     }
     public save() {
-        let e = { ...this.doc };
-        e.pages.forEach((p) => {
+        this.doc.pages.forEach((p) => {
             p.htmlContent = p.richTextBox.html;
-            p.richTextBox = undefined;
         });
-        return e;
+        return this.doc;
     }
 }

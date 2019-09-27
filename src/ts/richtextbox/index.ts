@@ -92,7 +92,7 @@ export default class RichTextBox {
                 .text(e.title);
             text_type.change(() => {
                 if (text_type.value() == e.title) {
-                    console.log('e');
+                    //console.log('e');
                     document.execCommand(e.action, undefined, e.value);
                 }
             });
