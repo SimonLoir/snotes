@@ -18,9 +18,57 @@ export default class snoteDocumentLoader {
                 doc.pages.forEach((page) => {
                     const page_image_split = page.image.split('///');
                     page.richTextBox = new RichTextBox(page.htmlContent);
-                    page.imageBox = $('.slides').child('img');
-                    page_image_split.splice(0, 1);
-                    page.imageBox.attr('src', page_image_split.join('///'));
+                    const [width, height] = page_image_split
+                        .splice(0, 1)[0]
+                        .split('x');
+
+                    const svg = document.createElementNS(
+                        'http://www.w3.org/2000/svg',
+                        'svg'
+                    );
+
+                    const image = svg.appendChild(
+                        document.createElementNS(
+                            'http://www.w3.org/2000/svg',
+                            'image'
+                        )
+                    );
+
+                    document.querySelector('.slides').appendChild(svg);
+
+                    svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+                    image.setAttributeNS(
+                        'http://www.w3.org/1999/xlink',
+                        'href',
+                        page_image_split.join('///')
+                    );
+                    image.setAttribute('x', '0');
+                    image.setAttribute('y', '0');
+                    image.setAttribute('width', width);
+                    image.setAttribute('height', height);
+
+                    page.imageBox = $(svg);
+
+                    /**
+                     * Will be usefull for objects in slides
+                     */
+                    page.imageBox.click((e: MouseEvent) => {
+                        const pt = svg.createSVGPoint(); // Created once for document
+
+                        function alert_coords(evt: MouseEvent) {
+                            pt.x = evt.clientX;
+                            pt.y = evt.clientY;
+
+                            // The cursor point, translated into svg coordinates
+                            const cursorpt = pt.matrixTransform(
+                                svg.getScreenCTM().inverse()
+                            );
+                            console.log(
+                                '(' + cursorpt.x + ', ' + cursorpt.y + ')'
+                            );
+                        }
+                        alert_coords(e);
+                    });
                 });
                 $('.slides_switcher').remove();
                 let page = 0;

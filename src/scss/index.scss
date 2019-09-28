@@ -72,7 +72,8 @@ body {
         //background: grey;
         overflow: auto;
         padding: 5px;
-        & > img {
+        & > img,
+        & > svg {
             width: 100%;
         }
         .welcome-wrapper {
