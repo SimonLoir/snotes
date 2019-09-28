@@ -1,6 +1,7 @@
 import { snoteDocument } from '../core/json';
 import RichTextBox from '../richtextbox';
 import { $ } from '../tools/extjs';
+import { updateSize } from '..';
 
 export default class snoteDocumentLoader {
     constructor(public doc: snoteDocument) {
@@ -68,6 +69,7 @@ export default class snoteDocumentLoader {
                     });
 
                 $('.welcome-wrapper').css('display', 'none');
+                updateSize();
                 break;
 
             default:

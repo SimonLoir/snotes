@@ -13,6 +13,8 @@
         <script src="./src/js/pdf.worker.js"></script>
         <script>
             window.XPDF = PDFJS;
+            const { dialog } = require('electron').remote;
+            window.saveDialog = () => dialog.showSaveDialogSync();
         </script>
     </body>
 </html>

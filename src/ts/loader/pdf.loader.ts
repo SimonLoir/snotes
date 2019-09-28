@@ -16,7 +16,7 @@ export default class PDFLoader {
                 //console.log(page);
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
-                const viewport = page.getViewport(2);
+                const viewport = page.getViewport(1.5);
                 canvas.setAttribute('width', viewport.width);
                 canvas.setAttribute('height', viewport.height);
                 await page.render({

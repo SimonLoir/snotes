@@ -45,6 +45,11 @@ let snoteDoc: snoteDocumentLoader;
             console.log('s');
             console.log(require('fs'));
 
+            if (!snoteDoc.doc.file_path) {
+                //@ts-ignore
+                snoteDoc.doc.file_path = window.saveDialog();
+            }
+
             if (snoteDoc.doc.file_path)
                 require('fs').writeFileSync(
                     snoteDoc.doc.file_path,
@@ -77,6 +82,52 @@ const flipper: ExtJsObject = workspace.child('div').addClass('flip')
     .html(`<i class="material-icons">
                 flip
             </i>`);
+
+const flipper_html_element: HTMLDivElement = flipper.get(0);
+let down = false;
+let startX: number;
+let startWidth: number;
+
+const mouseDown = (e: MouseEvent) => {
+    const w = window.getComputedStyle(workspace.get(0)).width;
+    const w2 = window.getComputedStyle($('.rich-textarea').get(0)).width;
+    startWidth = parseFloat(w.replace('px', ''));
+    startX = e.pageX;
+    down = true;
+};
+
+flipper_html_element.addEventListener('mousedown', mouseDown);
+
+const updateWidth = (e: MouseEvent) => {
+    if (!down) return;
+    const delta = e.pageX - startX;
+    const pageWidth = parseFloat(
+        window.getComputedStyle(document.body).width.replace('px', '')
+    );
+    const leftWidth = Math.min(
+        Math.max(startWidth + delta, 200),
+        pageWidth - 200
+    );
+    workspace.css('width', leftWidth + 'px');
+    $('.rich-textarea').css('width', pageWidth - leftWidth - 1 + 'px');
+};
+
+window.addEventListener('mousemove', updateWidth);
+
+export const updateSize = () => {
+    startX = 0;
+    //@ts-ignore
+    mouseDown({ pageX: 0 });
+    //@ts-ignore
+    updateWidth({ pageX: 0 });
+    down = false;
+};
+
+window.addEventListener('resize', updateSize);
+
+window.addEventListener('mouseup', (e) => {
+    down = false;
+});
 new RichTextBox(
     `<h2>SNotes 2.0</h2><div>Bienvenue sur SNotes ! SNotes c'est un logiciel de prise de notes qui est entièrement <i>gratuit</i>. Pas d'abonnement, pas d'achat, toutes les fonctionnalités sont gratuites et le resteront 😎</div><div><br></div><h2>Quoi de neuf en version 2 ?</h2><div>La version 2 de SNotes vient avec le format de prise de notes SNotes format v3. Les notes sont plus structurées au sein du fichier, ce qui rend le logiciel plus efficace lors de l'ouverture des fichiers .snote (ou .snotes, les deux sont valides).</div><div><br></div><div>Une interface plus agréable à utiliser est aussi au rendez-vous ! Le but est d'être efficace à 100% lors de la prise de notes 😁</div>`
 );
