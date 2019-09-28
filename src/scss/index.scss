@@ -1,0 +1,211 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.rich-textarea {
+    z-index: 85;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    height: 100vh;
+    width: 50vw;
+    border-left: 1px solid rgb(215, 215, 215);
+}
+
+.workspace {
+    z-index: 90;
+    background: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    height: 100vh;
+    width: calc(50vw - 1px);
+
+    .flip {
+        background: white;
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translate(50%, -50%);
+        border: 1px solid rgb(215, 215, 215);
+
+        padding: 2px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        border-radius: 4px;
+        cursor: col-resize;
+
+        & i {
+            vertical-align: middle;
+        }
+
+        opacity: 0;
+
+        transition: 0.75s;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    $controls-height: 30px;
+    $padding: 12px;
+    @import '../ts/richtextbox/_controls';
+
+    .controls {
+        @extend %controls;
+    }
+
+    .slides {
+        position: absolute;
+        top: #{$controls-height + 2 * $padding + 1px};
+        left: 0;
+        right: 0;
+        bottom: 55px;
+        //background: grey;
+        overflow: auto;
+        padding: 5px;
+        & > img {
+            width: 100%;
+        }
+        .welcome-wrapper {
+            position: absolute;
+            text-align: center;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50%;
+            color: rgb(86, 86, 86);
+            & img {
+                display: block;
+                position: relative;
+                width: 400px;
+                max-width: 80%;
+                margin: auto;
+                margin-bottom: 35px;
+            }
+        }
+    }
+
+    .slides_switcher {
+        position: absolute;
+        bottom: 5px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.85);
+        color: white;
+
+        border-radius: 4px;
+        user-select: none;
+        span {
+            vertical-align: middle;
+            display: inline-block;
+            line-height: 30px;
+            padding: 8px;
+            //padding-top: 15px;
+            //padding-bottom: 15px;
+            &.current_page {
+                font-size: 18px;
+            }
+            &.next,
+            &.previous {
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+.loader {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: white;
+    z-index: 98;
+    .gooey {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 142px;
+        height: 40px;
+        margin: -20px 0 0 -71px;
+        background: #fff;
+        filter: contrast(20);
+    }
+    .gooey .dot {
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        top: 12px;
+        left: 15px;
+        filter: blur(4px);
+        background: #000;
+        border-radius: 50%;
+        transform: translateX(0);
+        animation: dot 2.8s infinite;
+    }
+    .gooey .dots {
+        transform: translateX(0);
+        margin-top: 12px;
+        margin-left: 31px;
+        animation: dots 2.8s infinite;
+    }
+    .gooey .dots span {
+        display: block;
+        float: left;
+        width: 16px;
+        height: 16px;
+        margin-left: 16px;
+        filter: blur(4px);
+        background: #000;
+        border-radius: 50%;
+    }
+    @-moz-keyframes dot {
+        50% {
+            transform: translateX(96px);
+        }
+    }
+    @-webkit-keyframes dot {
+        50% {
+            transform: translateX(96px);
+        }
+    }
+    @-o-keyframes dot {
+        50% {
+            transform: translateX(96px);
+        }
+    }
+    @keyframes dot {
+        50% {
+            transform: translateX(96px);
+        }
+    }
+    @-moz-keyframes dots {
+        50% {
+            transform: translateX(-31px);
+        }
+    }
+    @-webkit-keyframes dots {
+        50% {
+            transform: translateX(-31px);
+        }
+    }
+    @-o-keyframes dots {
+        50% {
+            transform: translateX(-31px);
+        }
+    }
+    @keyframes dots {
+        50% {
+            transform: translateX(-31px);
+        }
+    }
+}

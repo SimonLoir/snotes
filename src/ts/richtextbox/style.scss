@@ -1,0 +1,37 @@
+.matrix {
+    display: inline-block;
+    background: #eee;
+    vertical-align: middle;
+    position: relative;
+
+    & table {
+        display: inline-table;
+        vertical-align: top;
+
+        & td {
+            background: white;
+        }
+    }
+}
+
+.rich-textarea {
+    $controls-height: 30px;
+    $padding: 12px;
+    @import 'controls';
+
+    .controls {
+        @extend %controls;
+    }
+
+    .text {
+        outline: none;
+        position: absolute;
+        top: #{$controls-height + 2 * $padding + 1px};
+        right: 0;
+        left: 0;
+        bottom: 0;
+        padding: 25px;
+        overflow: auto;
+        background: white;
+    }
+}

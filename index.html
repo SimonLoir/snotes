@@ -1,70 +1,20 @@
 <!DOCTYPE html>
-<html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>SNotes</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</head>
-
-<body>
-
-    <div id="start_screen" class="">
-        <div class="wrapper-center">
-            <h1>SNotes (alpha)</h1>
-            <p>Prenez des notes, sauvegardez-les et exportez-les.</p>
-            <p><b id="ss-message">Chargement ...</b></p>
-        </div>
-    </div>
-    <main>
-        <div id="menu">
-            <button id="menu-save">Sauvegarder</button>
-            <button id="menu-export">Exporter</button>
-            <button id="menu-open-from-scloud">Ouvrir depuis SCloud</button>
-        </div>
-        <div id="notes">
-            <div id="tools">
-
-            </div>
-
-        </div>
-        <div id="docs">
-            <button id="open">Ouvrir un PDF ou un fichier .snote</button>
-        </div>
-    </main>
-    <div id="tmp" style="display: none;"></div>
-    <span id="doc_location"></span>
-    <style>
-        @font-face {
-            font-family: 'Montserrat';
-            font-weight: 400;
-            src: url('montserrat/Montserrat/Montserrat-Regular.ttf');
-        }
-
-        @font-face {
-            font-family: 'MontserratBold';
-            font-weight: 400;
-            src: url('montserrat/Montserrat/Montserrat-Bold.ttf');
-        }
-    </style>
-    <script>
-        document.ondragover = document.ondrop = (ev) => {
-            ev.preventDefault()
-        }
-        if (window.process) {
-            //alert(JSON.stringify(process.argv))
-        }
-    </script>
-    <script src="./dist/snote.bundle.js"></script>
-    <script src="./src/js/pdf.js"></script>
-    <script src="./src/js/pdf.worker.js"></script>
-    <style>
-        .material-icons.md-15 {
-            font-size: 20px;
-        }
-    </style>
-</body>
-
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>SNotes v2.0</title>
+        <link rel="stylesheet" href="./icons/material-icons.css" />
+    </head>
+    <body>
+        <script src="./dist/index.bundle.js"></script>
+        <script src="./src/js/pdf.js"></script>
+        <script src="./src/js/pdf.worker.js"></script>
+        <script>
+            window.XPDF = PDFJS;
+            const { dialog } = require('electron').remote;
+            window.saveDialog = () => dialog.showSaveDialogSync();
+        </script>
+    </body>
 </html>

@@ -3,14 +3,15 @@ const path = require('path');
 module.exports = {
     target: 'node',
     entry: {
-        snote: './src/snote',
-        export: './src/export'
+        index: './src/ts/index.ts'
     },
+    node: false,
     module: {
         rules: [
             {
                 test: /\.ts?$/,
-                use: 'ts-loader'
+                use: 'ts-loader',
+                exclude: /node_modules/
             },
             {
                 test: /\.scss$/,
@@ -35,5 +36,6 @@ module.exports = {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist')
     },
-    watch: true
+    watch: true,
+    mode: 'development'
 };

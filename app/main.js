@@ -1,13 +1,11 @@
 /**
  *  On déclare des variables de base
  */
-const { app, globalShortcut, Menu, ipcMain, shell } = require('electron');
+const { app, globalShortcut } = require('electron');
 const electron = require('electron');
 const bw = electron.BrowserWindow;
 const path = require('path');
 const url = require('url');
-const os = require('os');
-const fs = require('fs');
 
 /**
  * Quand l'app est prête.
@@ -16,7 +14,12 @@ app.on('ready', function() {
     /**
      * Création de la fenêtre d'affichage
      */
-    var main_window = new bw();
+    var main_window = new bw({
+        webPreferences: {
+            nodeIntegration: true,
+        },
+    });
+    //main_window.setMenu(null);
     /**
      * On défini l'url du browser window.
      */
@@ -24,7 +27,7 @@ app.on('ready', function() {
         url.format({
             pathname: path.join(__dirname, '../index.html'),
             protocol: 'file:',
-            slashes: true
+            slashes: true,
         })
     );
     /**
@@ -39,17 +42,5 @@ app.on('ready', function() {
      */
     app.on('window-all-closed', function() {
         app.quit();
-    });
-    ipcMain.on('print', event => {
-        const pdfPath = path.join(os.tmpdir(), 'print.pdf');
-        event.sender.webContents.printToPDF({}, function(error, data) {
-            if (error) throw error;
-            fs.writeFile(pdfPath, data, function(error) {
-                if (error) {
-                    throw error;
-                }
-                shell.openItem(pdfPath);
-            });
-        });
     });
 });
