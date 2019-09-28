@@ -2,6 +2,7 @@ import { ExtJsObject, $ } from '../tools/extjs';
 
 export default class loaderUI {
     private loader: ExtJsObject;
+    private message_container: ExtJsObject;
     constructor() {
         this.loader = $('body')
             .child('div')
@@ -12,6 +13,16 @@ export default class loaderUI {
         dots.child('span');
         dots.child('span');
         dots.child('span');
+        this.message_container = this.loader.child('span').cssObj({
+            position: 'absolute',
+            left: '50%',
+            bottom: '25px',
+            transform: 'translateX(-50%)',
+        });
+    }
+
+    public set text(text: string) {
+        this.message_container.text(text);
     }
 
     public destroy() {

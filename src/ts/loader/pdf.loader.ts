@@ -1,8 +1,11 @@
+import loaderUI from './ui.loader';
+
 export default class PDFLoader {
-    load(base_file: File) {
+    load(base_file: File, loader: loaderUI) {
         //@ts-ignore
         const PDFJS = window.XPDF;
         const file = URL.createObjectURL(base_file);
+        loader.text = 'Ouverture du PDF';
         return new Promise(async (resolve: (e: string[]) => void) => {
             const ext = base_file.name.split('.').reverse()[0];
             if (ext != 'pdf')
@@ -12,6 +15,10 @@ export default class PDFLoader {
             //console.log(doc);
             const images: string[] = [];
             for (let i = 0; i < doc.numPages; i++) {
+                loader.text = `Ouverture du PDF - page ${i + 1} / ${
+                    doc.numPages
+                }`;
+
                 const page = await doc.getPage(i + 1);
                 //console.log(page);
                 const canvas = document.createElement('canvas');

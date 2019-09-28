@@ -14,12 +14,12 @@ export default class FileLoader {
                 .change(async () => {
                     const ui = new loaderUI();
                     const base_file: File = i.get(0).files[0];
-                    //console.log(base_file);
+                    ui.text = 'Chargement du fichier';
                     const ext = base_file.name.split('.').reverse()[0];
                     let images: string[];
 
                     if (ext == 'pdf')
-                        images = await new PDFLoader().load(base_file);
+                        images = await new PDFLoader().load(base_file, ui);
                     else if (ext == 'snote' || ext == 'snotes') {
                         const result: snoteDocument = JSON.parse(
                             await this.readFilebAsText(base_file)
@@ -28,7 +28,13 @@ export default class FileLoader {
                         if (isNodeEnv()) result.file_path = base_file.path;
                         ui.destroy();
                         return resolve(result);
+                    } else {
+                        return alert(
+                            "Désolé, ce type de document n'est pas encore supporté :-("
+                        );
                     }
+
+                    ui.text = 'Document prêt pour le rendu';
 
                     const snoteDoc: snoteDocument = {
                         type: 'snote',
@@ -44,6 +50,8 @@ export default class FileLoader {
                             htmlContent: '',
                         });
                     });
+
+                    ui.text = 'Document ready !';
 
                     ui.destroy();
                     resolve(snoteDoc);

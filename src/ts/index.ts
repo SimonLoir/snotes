@@ -42,9 +42,6 @@ let snoteDoc: snoteDocumentLoader;
                     `Désolé, la fonction sauvegarder n'est pas disponible ici mais vous pouvez toujours utiliser l'option télécharger (icone suivante)`
                 );
 
-            console.log('s');
-            console.log(require('fs'));
-
             if (!snoteDoc.doc.file_path) {
                 //@ts-ignore
                 snoteDoc.doc.file_path = window.saveDialog();
@@ -129,7 +126,22 @@ window.addEventListener('mouseup', (e) => {
     down = false;
 });
 new RichTextBox(
-    `<h2>SNotes 2.0</h2><div>Bienvenue sur SNotes ! SNotes c'est un logiciel de prise de notes qui est entièrement <i>gratuit</i>. Pas d'abonnement, pas d'achat, toutes les fonctionnalités sont gratuites et le resteront 😎</div><div><br></div><h2>Quoi de neuf en version 2 ?</h2><div>La version 2 de SNotes vient avec le format de prise de notes SNotes format v3. Les notes sont plus structurées au sein du fichier, ce qui rend le logiciel plus efficace lors de l'ouverture des fichiers .snote (ou .snotes, les deux sont valides).</div><div><br></div><div>Une interface plus agréable à utiliser est aussi au rendez-vous ! Le but est d'être efficace à 100% lors de la prise de notes 😁</div>`
+    `<h2>SNotes 2.0</h2>
+    <div>
+        Bienvenue sur SNotes ! SNotes c'est un logiciel de prise de notes qui est entièrement <i>gratuit</i>. 
+        Pas d'abonnement, pas d'achat, toutes les fonctionnalités sont gratuites et le resteront 😎
+    </div>
+    <div><br></div>
+    <h2>Quoi de neuf en version 2 ?</h2>
+    <div>
+        La version 2 de SNotes vient avec le format de prise de notes SNotes format v3. 
+        Les notes sont plus structurées au sein du fichier, ce qui rend le logiciel plus efficace lors de l'ouverture des fichiers .snote (ou .snotes, les deux sont valides).
+    </div>
+    <div><br></div>
+    <div>
+        Une interface plus agréable à utiliser est aussi au rendez-vous !
+        Le but est d'être efficace à 100% lors de la prise de notes 😁
+    </div>`
 );
 //test- ok
 /*

@@ -2,16 +2,19 @@ import { snoteDocument } from '../core/json';
 import RichTextBox from '../richtextbox';
 import { $ } from '../tools/extjs';
 import { updateSize } from '..';
+import audioRecorder from '../audio-recorder';
 
 export default class snoteDocumentLoader {
     constructor(public doc: snoteDocument) {
-        //console.log(doc);
         if (doc.pages.length < 1) {
             alert('Document non valide !');
             throw 'Erreur document';
         }
+
         switch (doc.version) {
             case 3:
+                $('.slides').html('');
+                $('.rich-textarea').remove();
                 doc.pages.forEach((page) => {
                     const page_image_split = page.image.split('///');
                     page.richTextBox = new RichTextBox(page.htmlContent);
@@ -19,7 +22,6 @@ export default class snoteDocumentLoader {
                     page_image_split.splice(0, 1);
                     page.imageBox.attr('src', page_image_split.join('///'));
                 });
-                //console.log(doc.pages);
                 $('.slides_switcher').remove();
                 let page = 0;
                 const slide_switcher = $('.workspace')
@@ -33,6 +35,7 @@ export default class snoteDocumentLoader {
                 const current_page_ui = slide_switcher
                     .child('span')
                     .addClass('current_page');
+
                 const updateView = () => {
                     current_page_ui.text(
                         `Page ${page + 1}/${doc.pages.length}`
@@ -55,6 +58,9 @@ export default class snoteDocumentLoader {
                     if (page < 0) page = 0;
                     updateView();
                 });
+
+                new audioRecorder(slide_switcher);
+
                 slide_switcher
                     .child('span')
                     .addClass('next')
