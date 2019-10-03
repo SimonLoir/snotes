@@ -16,8 +16,8 @@ app.on('ready', function() {
      */
     var main_window = new bw({
         webPreferences: {
-            nodeIntegration: true,
-        },
+            nodeIntegration: true
+        }
     });
     //main_window.setMenu(null);
     /**
@@ -27,7 +27,7 @@ app.on('ready', function() {
         url.format({
             pathname: path.join(__dirname, '../index.html'),
             protocol: 'file:',
-            slashes: true,
+            slashes: true
         })
     );
     /**
@@ -44,3 +44,10 @@ app.on('ready', function() {
         app.quit();
     });
 });
+
+console.log(process.argv);
+
+if(process.argv.length == 2){
+    const {ipcMain} = require('electron')
+    
+}

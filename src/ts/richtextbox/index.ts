@@ -1,10 +1,31 @@
 import { $, ExtJsObject } from '../tools/extjs';
 import './style.scss';
+import SNotesMath from '../math';
 
 export default class RichTextBox {
+    private checkClasses(e: any) {
+        for (let i = 0; i < this.classes.length; i++) {
+            const c = this.classes[i];
+            //console.log(e.relatedTarget, c, $(e.relatedTarget).parent('.' + c));
+            try {
+                if (
+                    e.relatedTarget &&
+                    $(e.relatedTarget)
+                        .parent('.' + c)
+                        .count() > 0 &&
+                    $(e.relatedTarget)
+                        .parent('.' + c)
+                        .get(0) != null
+                )
+                    return true;
+            } catch (error) {}
+        }
+        return false;
+    }
     private controls: ExtJsObject;
     private base: ExtJsObject;
     private textarea: ExtJsObject;
+    private classes = ['matrix', 'snotes-math-object'];
     constructor(
         default_html = 'Default text',
         appendTo: ExtJsObject = $('body')
@@ -24,31 +45,63 @@ export default class RichTextBox {
         this.textarea = el;
 
         el.get(0).addEventListener('blur', (e: FocusEvent) => {
-            if (
-                e.relatedTarget &&
-                $(e.relatedTarget)
-                    .parent('.matrix')
-                    .count() > 0
-            )
-                return;
+            if (this.checkClasses(e)) return;
+
             e.preventDefault();
             e.stopPropagation();
             //@ts-ignore
             e.target.focus();
         });
+        el.keyup((e: KeyboardEvent) => {
+            switch (e.key) {
+                case 'm':
+                    if (e.ctrlKey) {
+                        document.execCommand(
+                            'insertHTML',
+                            false,
+                            `<span class="snotes-math-object new">SMathObjectForSNotes</span> `
+                        );
+                    }
+                    const x: HTMLElement = e.srcElement
+                        //@ts-ignore
+                        .querySelector('.new');
+                    new SNotesMath().buildFrom(x);
+                    x.classList.remove('new');
+                    break;
+
+                default:
+                    break;
+            }
+        });
         el.keydown((e: KeyboardEvent) => {
+            const event: any = { ...e };
+            event.relatedTarget = e.target;
+            //console.log(this.checkClasses(event));
+            if (this.checkClasses(event)) return;
+            console.log(e);
             const c = e.keyCode;
+            switch (e.key) {
+                case 'm':
+                    if (e.ctrlKey) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
+                    break;
+
+                default:
+                    break;
+            }
             switch (c) {
                 case 9:
                     e.preventDefault();
                     if (e.ctrlKey) {
                         e.preventDefault();
-                        e.stopPropagation();
+                        //e.stopPropagation();
+                        console.log(e.target);
                         document.execCommand(
                             'insertHTML',
                             true,
-                            `
-                        <span class="matrix" contenteditable="false">
+                            `<span class="matrix" contenteditable="false">
                         <table contenteditable="true">
                             <tr>
                                 <td>0</td>
@@ -66,7 +119,7 @@ export default class RichTextBox {
                                 <td>0</td>
                             </tr>
                         </table>
-                        </span> `
+                        </span>`
                         );
                     } else document.execCommand('insertText', undefined, '\t');
                     break;
@@ -84,8 +137,8 @@ export default class RichTextBox {
             { title: 'Titre 1', value: '<h1>', action: 'formatBlock' },
             { title: 'Titre 2', value: '<h2>', action: 'formatBlock' },
             { title: 'Titre 3', value: '<h3>', action: 'formatBlock' },
-            { title: 'Titre 4', value: '<h4>', action: 'formatBlock' },
-        ].forEach((e) => {
+            { title: 'Titre 4', value: '<h4>', action: 'formatBlock' }
+        ].forEach(e => {
             text_type
                 .child('option')
                 .attr('value', e.title)
@@ -105,39 +158,39 @@ export default class RichTextBox {
             {
                 icon: 'format_italic',
                 command: 'italic',
-                title: 'Mettre en italique',
+                title: 'Mettre en italique'
             },
             {
                 icon: 'format_strikethrough',
                 command: 'strikeThrough',
-                title: 'Barrer',
+                title: 'Barrer'
             },
             {
                 icon: 'format_indent_increase',
                 command: 'indent',
-                title: "Augmenter l'indentation",
+                title: "Augmenter l'indentation"
             },
             {
                 icon: 'format_indent_decrease',
                 command: 'outdent',
-                title: "Diminuer l'indentation",
+                title: "Diminuer l'indentation"
             },
             {
                 icon: 'format_underlined',
                 command: 'underline',
-                title: 'Souligner',
+                title: 'Souligner'
             },
             {
                 icon: 'format_list_bulleted',
                 command: 'insertUnorderedList',
-                title: 'Liste non numérotée',
+                title: 'Liste non numérotée'
             },
             {
                 icon: 'format_list_numbered',
                 command: 'insertOrderedList',
-                title: 'Liste numérotée',
-            },
-        ].forEach((e) => {
+                title: 'Liste numérotée'
+            }
+        ].forEach(e => {
             this.controls
                 .child('span')
                 .addClass('material-icons')
