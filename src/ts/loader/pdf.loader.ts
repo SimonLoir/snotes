@@ -12,7 +12,6 @@ export default class PDFLoader {
                 throw "Erreur lors du chargement : ce fichier n'est pas un PDF";
 
             const doc = await PDFJS.getDocument({ url: file });
-            //console.log(doc);
             const images: string[] = [];
             for (let i = 0; i < doc.numPages; i++) {
                 loader.text = `Ouverture du PDF - page ${i + 1} / ${
@@ -20,7 +19,7 @@ export default class PDFLoader {
                 }`;
 
                 const page = await doc.getPage(i + 1);
-                //console.log(page);
+                //console.log(await page.getTextContent()); // get the content of the page ~ 2.5
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
                 const viewport = page.getViewport(1.5);
