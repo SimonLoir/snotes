@@ -16,15 +16,15 @@
     "dependencies": {},
     "devDependencies": {
         "css-loader": "^0.28.11",
-        "electron": "^6.0.0",
+        "electron": "^6.0.11",
         "electron-builder": "^19.56.2",
         "node-sass": "^4.12.0",
         "sass-loader": "^6.0.7",
         "style-loader": "^0.20.3",
-        "ts-loader": "^6.0.4",
-        "typescript": "^2.9.2",
-        "webpack": "^4.20.2",
-        "webpack-cli": "^3.3.6"
+        "ts-loader": "^6.2.0",
+        "typescript": "^3.6.3",
+        "webpack": "^4.41.0",
+        "webpack-cli": "^3.3.9"
     },
     "build": {
         "appId": "simonloir.snotes",
