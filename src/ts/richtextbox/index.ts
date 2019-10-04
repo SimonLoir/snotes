@@ -60,14 +60,16 @@ export default class RichTextBox {
                         document.execCommand(
                             'insertHTML',
                             false,
-                            `<span class="snotes-math-object new">SMathObjectForSNotes</span> `
+                            `<span class="${SNotesMath.className} new">SMathObjectForSNotes</span> `
                         );
                     }
                     const x: HTMLElement = e.srcElement
                         //@ts-ignore
                         .querySelector('.new');
-                    new SNotesMath().buildFrom(x);
+                    const m = new SNotesMath();
+                    m.buildFrom(x);
                     x.classList.remove('new');
+                    m.focus();
                     break;
 
                 default:
