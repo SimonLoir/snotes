@@ -6,8 +6,9 @@
     "scripts": {
         "dev": "webpack -d",
         "prod": "webpack -p",
-        "start": "electron .",
-        "dist": "build --windows --ia32 --x64",
+        "start": "electron . --dev",
+        "dist": "build --windows --x64",
+        "dist32": "build --windows --x32",
         "darwin": "build --mac --ia32 --x64",
         "linux": "build --linux --ia32 --x64"
     },

@@ -119,6 +119,10 @@ body {
             &.previous {
                 cursor: pointer;
             }
+            &.no-padding {
+                padding-left: 0;
+                padding-right: 0;
+            }
         }
     }
 }

@@ -4,6 +4,7 @@ import SNotesMath from '../math';
 
 export default class RichTextBox {
     private checkClasses(e: any) {
+        if (e.relatedTarget.classList.contains('blur-allowed')) return true;
         for (let i = 0; i < this.classes.length; i++) {
             const c = this.classes[i];
             //console.log(e.relatedTarget, c, $(e.relatedTarget).parent('.' + c));
@@ -137,8 +138,8 @@ export default class RichTextBox {
             { title: 'Titre 1', value: '<h1>', action: 'formatBlock' },
             { title: 'Titre 2', value: '<h2>', action: 'formatBlock' },
             { title: 'Titre 3', value: '<h3>', action: 'formatBlock' },
-            { title: 'Titre 4', value: '<h4>', action: 'formatBlock' }
-        ].forEach(e => {
+            { title: 'Titre 4', value: '<h4>', action: 'formatBlock' },
+        ].forEach((e) => {
             text_type
                 .child('option')
                 .attr('value', e.title)
@@ -158,39 +159,39 @@ export default class RichTextBox {
             {
                 icon: 'format_italic',
                 command: 'italic',
-                title: 'Mettre en italique'
+                title: 'Mettre en italique',
             },
             {
                 icon: 'format_strikethrough',
                 command: 'strikeThrough',
-                title: 'Barrer'
+                title: 'Barrer',
             },
             {
                 icon: 'format_indent_increase',
                 command: 'indent',
-                title: "Augmenter l'indentation"
+                title: "Augmenter l'indentation",
             },
             {
                 icon: 'format_indent_decrease',
                 command: 'outdent',
-                title: "Diminuer l'indentation"
+                title: "Diminuer l'indentation",
             },
             {
                 icon: 'format_underlined',
                 command: 'underline',
-                title: 'Souligner'
+                title: 'Souligner',
             },
             {
                 icon: 'format_list_bulleted',
                 command: 'insertUnorderedList',
-                title: 'Liste non numérotée'
+                title: 'Liste non numérotée',
             },
             {
                 icon: 'format_list_numbered',
                 command: 'insertOrderedList',
-                title: 'Liste numérotée'
-            }
-        ].forEach(e => {
+                title: 'Liste numérotée',
+            },
+        ].forEach((e) => {
             this.controls
                 .child('span')
                 .addClass('material-icons')

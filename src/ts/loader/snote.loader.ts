@@ -1,6 +1,6 @@
 import { snoteDocument } from '../core/json';
 import RichTextBox from '../richtextbox';
-import { $ } from '../tools/extjs';
+import { $, ExtJsObject } from '../tools/extjs';
 import { updateSize } from '..';
 import audioRecorder from '../audio-recorder';
 
@@ -83,11 +83,35 @@ export default class snoteDocumentLoader {
                 const current_page_ui = slide_switcher
                     .child('span')
                     .addClass('current_page');
+                current_page_ui
+                    .child('span')
+                    .text('Page ')
+                    .addClass('no-padding');
 
-                const updateView = () => {
-                    current_page_ui.text(
-                        `Page ${page + 1}/${doc.pages.length}`
-                    );
+                const page_number: ExtJsObject = current_page_ui
+                    .child('span')
+                    .text((page + 1).toString())
+                    .addClass('no-padding');
+
+                current_page_ui
+                    .child('span')
+                    .text('/')
+                    .addClass('no-padding');
+                current_page_ui
+                    .child('span')
+                    .text(doc.pages.length.toString())
+                    .addClass('no-padding');
+
+                page_number.input(() => {
+                    page = parseInt(page_number.text()) - 1;
+                    updateView(false);
+                });
+
+                page_number.attr('contentEditable', 'true');
+                page_number.addClass('blur-allowed');
+
+                const updateView = (updateText = true) => {
+                    if (updateText) page_number.text('' + (page + 1));
 
                     doc.pages.forEach((p, i) => {
                         if (page == i) {
