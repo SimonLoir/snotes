@@ -3,6 +3,7 @@ import RichTextBox from '../richtextbox';
 import { $, ExtJsObject } from '../tools/extjs';
 import { updateSize } from '..';
 import audioRecorder from '../audio-recorder';
+import { noteObjManager } from '../object';
 
 export default class snoteDocumentLoader {
     constructor(public doc: snoteDocument) {
@@ -69,7 +70,9 @@ export default class snoteDocumentLoader {
                         }
                         alert_coords(e);
                     });
+                    noteObjManager.loadFor(page.richTextBox.textarea);
                 });
+
                 $('.slides_switcher').remove();
                 let page = 0;
                 const slide_switcher = $('.workspace')

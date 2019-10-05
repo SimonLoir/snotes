@@ -25,7 +25,7 @@ export default class RichTextBox {
     }
     private controls: ExtJsObject;
     private base: ExtJsObject;
-    private textarea: ExtJsObject;
+    public textarea: ExtJsObject;
     private classes = ['matrix', 'snotes-math-object'];
     constructor(
         default_html = 'Default text',
