@@ -1,87 +1,29 @@
 import NoteObject from '../object/object';
 import { $, ExtJsObject } from '../tools/extjs';
+import { items } from './items';
 
 import './math.scss';
+import { noteObjManager } from '../object';
 export default class SNotesMath extends NoteObject {
     public static type = 'snote_math_object';
     public static className = 'snotes-math-object';
     private focus_element: HTMLElement;
-    private items = [
-        {
-            trigger: 'integral',
-            code: () => document.execCommand('insertHTML', null, '&int;'),
-        },
-        {
-            trigger: 'forall',
-            code: () => document.execCommand('insertHTML', null, '&#8704;'),
-        },
-        {
-            trigger: 'complement',
-            code: () => document.execCommand('insertHTML', null, '&#8705;'),
-        },
-        {
-            trigger: 'part_diff',
-            code: () => document.execCommand('insertHTML', null, '&#8706;'),
-        },
-
-        {
-            trigger: 'exists',
-            code: () => document.execCommand('insertHTML', null, '&#8707;'),
-        },
-
-        {
-            trigger: '!exists',
-            code: () => document.execCommand('insertHTML', null, '&#8708;'),
-        },
-
-        {
-            trigger: 'nabla',
-            code: () => document.execCommand('insertHTML', null, '&nabla;'),
-        },
-
-        {
-            trigger: 'in',
-            code: () => document.execCommand('insertHTML', null, '&isin;'),
-        },
-
-        {
-            trigger: 'not_in',
-            code: () => document.execCommand('insertHTML', null, '&notin;'),
-        },
-
-        {
-            trigger: 'sum',
-            code: () => document.execCommand('insertHTML', null, '&sum;'),
-        },
-
-        {
-            trigger: 'minplus',
-            code: () => document.execCommand('insertHTML', null, '&#8723;'),
-        },
-
-        {
-            trigger: 'set_minus',
-            code: () => document.execCommand('insertHTML', null, '&#8726;'),
-        },
-
-        {
-            trigger: 'sqrt',
-            code: () => document.execCommand('insertHTML', null, '&radic;'),
-        },
-
-        {
-            trigger: 'infinity',
-            code: () => document.execCommand('insertHTML', null, '&infin;'),
-        },
-    ];
+    private items = items;
     protected build() {
         const e = $(this.e);
+        let line: ExtJsObject;
         e.attr('contentEditable', 'false');
-        e.html('');
-        const line: ExtJsObject = e
-            .child('span')
-            .attr('contentEditable', 'true')
-            .text(' ');
+        if (e.hasClass('new')) {
+            e.html('');
+            line = e
+                .child('span')
+                .attr('contentEditable', 'true')
+                .text(' ');
+        } else {
+            line = e.children('span.snotes-math-line');
+        }
+
+        line.addClass('snotes-math-line');
         let isMathObj = false;
         line.keydown((e: KeyboardEvent) => {
             //@ts-ignore
@@ -157,3 +99,5 @@ function getCursorPosition(target: any) {
         }
     }
 }
+
+noteObjManager.object = SNotesMath;
