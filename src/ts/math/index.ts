@@ -6,6 +6,74 @@ export default class SNotesMath extends NoteObject {
     public static type = 'snote_math_object';
     public static className = 'snotes-math-object';
     private focus_element: HTMLElement;
+    private items = [
+        {
+            trigger: 'integral',
+            code: () => document.execCommand('insertHTML', null, '&int;'),
+        },
+        {
+            trigger: 'forall',
+            code: () => document.execCommand('insertHTML', null, '&#8704;'),
+        },
+        {
+            trigger: 'complement',
+            code: () => document.execCommand('insertHTML', null, '&#8705;'),
+        },
+        {
+            trigger: 'part_diff',
+            code: () => document.execCommand('insertHTML', null, '&#8706;'),
+        },
+
+        {
+            trigger: 'exists',
+            code: () => document.execCommand('insertHTML', null, '&#8707;'),
+        },
+
+        {
+            trigger: '!exists',
+            code: () => document.execCommand('insertHTML', null, '&#8708;'),
+        },
+
+        {
+            trigger: 'nabla',
+            code: () => document.execCommand('insertHTML', null, '&nabla;'),
+        },
+
+        {
+            trigger: 'in',
+            code: () => document.execCommand('insertHTML', null, '&isin;'),
+        },
+
+        {
+            trigger: 'not_in',
+            code: () => document.execCommand('insertHTML', null, '&notin;'),
+        },
+
+        {
+            trigger: 'sum',
+            code: () => document.execCommand('insertHTML', null, '&sum;'),
+        },
+
+        {
+            trigger: 'minplus',
+            code: () => document.execCommand('insertHTML', null, '&#8723;'),
+        },
+
+        {
+            trigger: 'set_minus',
+            code: () => document.execCommand('insertHTML', null, '&#8726;'),
+        },
+
+        {
+            trigger: 'sqrt',
+            code: () => document.execCommand('insertHTML', null, '&radic;'),
+        },
+
+        {
+            trigger: 'infinity',
+            code: () => document.execCommand('insertHTML', null, '&infin;'),
+        },
+    ];
     protected build() {
         const e = $(this.e);
         e.attr('contentEditable', 'false');
@@ -14,17 +82,22 @@ export default class SNotesMath extends NoteObject {
             .child('span')
             .attr('contentEditable', 'true')
             .text(' ');
+        let isMathObj = false;
         line.keydown((e: KeyboardEvent) => {
             //@ts-ignore
             console.log(getCursorPosition(e.target));
-            if (e.key == 'x') {
+            /*if (e.key == 'x') {
                 e.preventDefault();
                 document.execCommand('insertHTML', null, '&#119909;');
-            }
+            }*/
         });
-
         line.input((e: InputEvent) => {
-            if (e.data == ' ') {
+            if (isMathObj) {
+                if (e.data == '\\') isMathObj = false;
+            } else if (e.data == '\\') {
+                isMathObj = true;
+                console.log(e);
+            } else if (e.data == ' ') {
                 e.preventDefault();
                 document.execCommand('delete');
                 //@ts-ignore
@@ -38,20 +111,24 @@ export default class SNotesMath extends NoteObject {
 
                 for (let i = 1; i < 10; i++) {
                     const char = text[pos - i];
+                    if (char == undefined || char == ' ')
+                        return document.execCommand('insertText', null, ' ');
                     buffer = char + buffer;
                     if (char == '\\') break;
                 }
 
-                console.log(buffer);
+                if (buffer[0] != '\\')
+                    return document.execCommand('insertText', null, ' ');
 
-                if (buffer == '\\int\\') {
-                    for (let i = 0; i < buffer.length; i++) {
-                        document.execCommand('delete');
+                for (let i = 0; i < this.items.length; i++) {
+                    const item = this.items[i];
+                    if (buffer == `\\${item.trigger}\\`) {
+                        for (let i = 0; i < buffer.length; i++) {
+                            document.execCommand('delete');
+                        }
+                        return item.code();
                     }
-                    document.execCommand('insertHTML', null, '&int;');
                 }
-
-                console.log(pos, text[pos]);
             }
         });
         this.focus_element = line.get(0);
