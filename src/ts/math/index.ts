@@ -27,19 +27,21 @@ export default class SNotesMath extends NoteObject {
         let isMathObj = false;
         line.keydown((e: KeyboardEvent) => {
             //@ts-ignore
-            console.log(getCursorPosition(e.target));
+            //console.log(getCursorPosition(e.target));
             /*if (e.key == 'x') {
                 e.preventDefault();
                 document.execCommand('insertHTML', null, '&#119909;');
             }*/
         });
         line.input((e: InputEvent) => {
-            if (isMathObj) {
+            /*if (isMathObj) {
                 if (e.data == '\\') isMathObj = false;
             } else if (e.data == '\\') {
                 isMathObj = true;
                 console.log(e);
-            } else if (e.data == ' ') {
+            } else */ if (
+                e.data == ' '
+            ) {
                 e.preventDefault();
                 document.execCommand('delete');
                 //@ts-ignore

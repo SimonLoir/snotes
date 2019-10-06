@@ -29,6 +29,7 @@ export default class FileLoader {
                         ui.destroy();
                         return resolve(result);
                     } else {
+                        ui.destroy();
                         return alert(
                             "Désolé, ce type de document n'est pas encore supporté :-("
                         );

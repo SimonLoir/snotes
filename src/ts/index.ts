@@ -33,7 +33,7 @@ let snoteDoc: snoteDocumentLoader;
     {
         icon: 'save',
         title: 'Sauvegarder',
-        command: () => {
+        command: function(): any {
             if (snoteDoc == undefined)
                 return alert('Aucun document à sauvegarder');
 
@@ -47,12 +47,28 @@ let snoteDoc: snoteDocumentLoader;
                 snoteDoc.doc.file_path = window.saveDialog();
             }
 
-            if (snoteDoc.doc.file_path)
+            if (snoteDoc.doc.file_path) {
                 require('fs').writeFileSync(
                     snoteDoc.doc.file_path,
                     JSON.stringify(snoteDoc.save()),
                     'utf8'
                 );
+                console.log('done');
+                this.innerText = 'done';
+                setTimeout(() => {
+                    this.innerText = 'save';
+                }, 3000);
+                return;
+            }
+        },
+        register() {
+            window.addEventListener('keypress', (e) => {
+                if (e.which == 19 && e.ctrlKey && e.shiftKey == false) {
+                    this.command.bind(
+                        document.getElementById('snote-command-' + this.icon)
+                    )();
+                }
+            });
         },
     },
     {
@@ -63,6 +79,13 @@ let snoteDoc: snoteDocumentLoader;
                 return alert('Aucun document à sauvegarder');
             saveJSONAsFile(snoteDoc.save(), 'note.snote');
         },
+        register() {
+            window.addEventListener('keypress', (e) => {
+                if (e.which == 19 && e.ctrlKey && e.shiftKey) {
+                    this.command();
+                }
+            });
+        },
     },
 ].forEach((e) => {
     controls
@@ -70,9 +93,12 @@ let snoteDoc: snoteDocumentLoader;
         .addClass('material-icons')
         .attr('title', e.title || '')
         .text(e.icon)
-        .click(() => {
-            e.command();
+        .attr('id', 'snote-command-' + e.icon)
+        .click(function() {
+            e.command.bind(this)();
         });
+
+    if (e.register) e.register();
 });
 
 const flipper: ExtJsObject = workspace.child('div').addClass('flip')
