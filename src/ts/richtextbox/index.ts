@@ -4,6 +4,7 @@ import SNotesMath from '../math';
 
 export default class RichTextBox {
     private checkClasses(e: any) {
+        console.log('check class called', e);
         if (e.relatedTarget.classList.contains('blur-allowed')) return true;
         for (let i = 0; i < this.classes.length; i++) {
             const c = this.classes[i];
@@ -46,8 +47,7 @@ export default class RichTextBox {
         this.textarea = el;
 
         el.get(0).addEventListener('blur', (e: FocusEvent) => {
-            if (this.checkClasses(e)) return;
-
+            if (e.relatedTarget != null && this.checkClasses(e)) return;
             e.preventDefault();
             e.stopPropagation();
             //@ts-ignore
@@ -193,12 +193,24 @@ export default class RichTextBox {
                 command: 'insertOrderedList',
                 title: 'Liste numérotée',
             },
+            {
+                icon: '<span>x<sup>2</sup></span>',
+                command: 'superscript',
+                title: 'Mettre en exposant',
+                html: true,
+            },
+            {
+                icon: '<span>x<sub>2</sub></span>',
+                command: 'subscript',
+                title: 'Mettre en indice',
+                html: true,
+            },
         ].forEach((e) => {
             this.controls
                 .child('span')
-                .addClass('material-icons')
+                .addClass(e.html ? 'simple-text' : 'material-icons')
                 .attr('title', e.title || '')
-                .text(e.icon)
+                .html(e.icon)
                 .click(() => {
                     document.execCommand(e.command);
                 });
