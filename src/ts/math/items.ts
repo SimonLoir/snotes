@@ -65,4 +65,8 @@ export const items = [
         trigger: 'infinity',
         code: () => document.execCommand('insertHTML', null, '&infin;'),
     },
+    {
+        trigger: 'eps',
+        code: () => document.execCommand('insertHTML', null, '&#120576;'),
+    },
 ];

@@ -159,6 +159,26 @@ export default class RichTextBox {
             { icon: 'redo', command: 'redo', title: 'Refaire' },
             { icon: 'format_bold', command: 'bold', title: 'Mettre en gras' },
             {
+                icon: 'format_align_left',
+                command: 'justifyLeft',
+                title: 'Aligner à gauche',
+            },
+            {
+                icon: 'format_align_center',
+                command: 'justifyCenter',
+                title: 'Aligner au centre',
+            },
+            {
+                icon: 'format_align_right',
+                command: 'justifyRight',
+                title: 'Aligner à droite',
+            },
+            {
+                icon: 'format_align_justify',
+                command: 'justifyFull',
+                title: 'Justifier',
+            },
+            {
                 icon: 'format_italic',
                 command: 'italic',
                 title: 'Mettre en italique',
