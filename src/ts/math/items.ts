@@ -69,4 +69,12 @@ export const items = [
         trigger: 'eps',
         code: () => document.execCommand('insertHTML', null, '&#120576;'),
     },
+    {
+        trigger: 'not',
+        code: () => document.execCommand('insertHTML', null, '&not;'),
+    },
+    {
+        trigger: 'omega',
+        code: () => document.execCommand('insertHTML', null, '&Omega;'),
+    },
 ];
