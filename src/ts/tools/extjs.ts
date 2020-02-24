@@ -635,7 +635,7 @@ class AjaxRequest {
                 if (i !== 0) {
                     d = d + '&';
                 }
-                d = d + keys[i] + '=' + data[keys[i]];
+                d = d + keys[i] + '=' + encodeURIComponent(data[keys[i]]);
             }
             xhttp.setRequestHeader(
                 'Content-type',

@@ -48,6 +48,13 @@ export default class RichTextBox {
 
         el.get(0).addEventListener('blur', (e: FocusEvent) => {
             if (e.relatedTarget != null && this.checkClasses(e)) return;
+            if (
+                !$(e.relatedTarget)
+                    .parent('.rich-textarea')
+                    .get(0)
+            )
+                return;
+
             e.preventDefault();
             e.stopPropagation();
             //@ts-ignore
@@ -140,8 +147,8 @@ export default class RichTextBox {
             { title: 'Titre 1', value: '<h1>', action: 'formatBlock' },
             { title: 'Titre 2', value: '<h2>', action: 'formatBlock' },
             { title: 'Titre 3', value: '<h3>', action: 'formatBlock' },
-            { title: 'Titre 4', value: '<h4>', action: 'formatBlock' },
-        ].forEach((e) => {
+            { title: 'Titre 4', value: '<h4>', action: 'formatBlock' }
+        ].forEach(e => {
             text_type
                 .child('option')
                 .attr('value', e.title)
@@ -161,71 +168,71 @@ export default class RichTextBox {
             {
                 icon: 'format_align_left',
                 command: 'justifyLeft',
-                title: 'Aligner à gauche',
+                title: 'Aligner à gauche'
             },
             {
                 icon: 'format_align_center',
                 command: 'justifyCenter',
-                title: 'Aligner au centre',
+                title: 'Aligner au centre'
             },
             {
                 icon: 'format_align_right',
                 command: 'justifyRight',
-                title: 'Aligner à droite',
+                title: 'Aligner à droite'
             },
             {
                 icon: 'format_align_justify',
                 command: 'justifyFull',
-                title: 'Justifier',
+                title: 'Justifier'
             },
             {
                 icon: 'format_italic',
                 command: 'italic',
-                title: 'Mettre en italique',
+                title: 'Mettre en italique'
             },
             {
                 icon: 'format_strikethrough',
                 command: 'strikeThrough',
-                title: 'Barrer',
+                title: 'Barrer'
             },
             {
                 icon: 'format_indent_increase',
                 command: 'indent',
-                title: "Augmenter l'indentation",
+                title: "Augmenter l'indentation"
             },
             {
                 icon: 'format_indent_decrease',
                 command: 'outdent',
-                title: "Diminuer l'indentation",
+                title: "Diminuer l'indentation"
             },
             {
                 icon: 'format_underlined',
                 command: 'underline',
-                title: 'Souligner',
+                title: 'Souligner'
             },
             {
                 icon: 'format_list_bulleted',
                 command: 'insertUnorderedList',
-                title: 'Liste non numérotée',
+                title: 'Liste non numérotée'
             },
             {
                 icon: 'format_list_numbered',
                 command: 'insertOrderedList',
-                title: 'Liste numérotée',
+                title: 'Liste numérotée'
             },
             {
                 icon: '<span>x<sup>2</sup></span>',
                 command: 'superscript',
                 title: 'Mettre en exposant',
-                html: true,
+                html: true
             },
             {
                 icon: '<span>x<sub>2</sub></span>',
                 command: 'subscript',
                 title: 'Mettre en indice',
-                html: true,
-            },
-        ].forEach((e) => {
+                html: true
+            }
+        ].forEach(e => {
             this.controls
                 .child('span')
                 .addClass(e.html ? 'simple-text' : 'material-icons')
